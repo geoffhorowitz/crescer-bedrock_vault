@@ -76,6 +76,7 @@ When the user asks you to lint or audit the wiki:
 - Identify concepts mentioned in pages that lack their own page
 - Flag claims that may be outdated based on newer sources
 - Check that all pages follow the page format above
+- Check for duplications that can be consolidated without loss of understanding
 - Report findings as a numbered list with suggested fixes
 
 
@@ -85,3 +86,7 @@ When the user asks you to lint or audit the wiki:
 - Keep page names lowercase with hyphens (e.g. `machine-learning.md`)
 - Write in clear, plain language
 - When uncertain about how to categorize something, ask the user
+
+## Best Practices
+- Check `agent_guidance/best-practices.md` for project-specific operating guidance; if adding to it would make it longer than 256 lines, ask the user what to do before editing it.
+- Check `agent_guidance/project_management.md` for project management folder conventions and update triggers.
