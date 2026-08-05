@@ -15,7 +15,6 @@ This repository contains the structured project management vault and LLM-maintai
 │   ├── bedrock-communications.md  # Client-facing updates and meeting records
 │   ├── decisions.md               # Significant engineering and client decisions
 │   ├── learnings.md               # Pitfalls, technical findings, and lessons learned
-│   ├── mind-map.md                # Visual mind map and index of project management workflows
 │   └── open-items.md              # Active and resolved action items
 ├── raw/                           # Raw client documents and meeting notes (Immutable)
 └── wiki/                          # Concept pages and source summaries (Technical knowledge)

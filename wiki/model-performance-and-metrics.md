@@ -116,6 +116,21 @@ The V4 model's Focal Dice loss function achieved significant false positive redu
 
 Merging `UXO` and `AOI small black` classes during synthetic benchmarking increased true positive matches from 3 to 23. Geoff Horowitz instructed Sachin Pandey to update the V4 report narrative to ensure text descriptions accurately contextualize post-merge recall figures against baseline expectations (source: Iris Sync - 2026_07_29).
 
+## V4 Metric Overlap & Annotation Bug Fixes
+
+Sachin Pandey corrected bugs in V4 metric evaluation logic regarding annotation processing and handling overlap thresholds under 0.1 IoU. Fixing these calculation bugs ensures consistent, accurate metric reporting across baseline runs (source: Iris Sync - 2026_07_31).
+
+## Object-Level Metric Priority Mandate
+
+The team mandated evaluating model performance using **object-level precision and recall metrics** rather than pixel-level IoU. Pixel-level metrics cause confusion regarding model superiority, whereas object-level metrics accurately reflect target detection capability (source: Iris Sync - 2026_08_05).
+
+## Inference Pixel Size Filters & Output Configurations
+
+To refine inference outputs on new datasets:
+- **Area-of-Interest Filter**: Added a minimum size filter to exclude small non-target items (<2,000 to 3,000 pixels for AOI Big) (source: Iris Sync - 2026_08_05).
+- **Class Output Configuration**: Established output configuration settings so client deliverables focus on UXO and combined small black objects while suppressing unwanted classifications (source: Iris Sync - 2026_08_05).
+- **K-Fold Omission for Unseen Data**: Omitted K-fold evaluation structures when predicting on brand-new unseen datasets (since models are not retrained on that data), prioritizing direct performance visualization (source: Iris Sync - 2026_08_05).
+
 ## Related pages
 
 - [[automated-target-recognition]]
@@ -126,10 +141,13 @@ Merging `UXO` and `AOI small black` classes during synthetic benchmarking increa
 - [[model-training-and-iterations]]
 - [[data-quality-and-gaps]]
 - [[iris-sync-2026-07-29]]
+- [[iris-sync-2026-07-31]]
+- [[iris-sync-2026-08-03]]
+- [[iris-sync-2026-08-05]]
 - [[internal-bedrock-x-crescerai-initial-sow]]
 - [[sow-1-milestone-2-presentation]]
 - [[bedrock-sow-2]]
 
 ---
 
-**Sources**: raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_10; raw/meeting_transcripts/Iris Sync - 2026_07_13; raw/meeting_transcripts/Iris Sync - 2026_07_15; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Iris Sync - 2026_07_20; raw/meeting_transcripts/Iris Sync - 2026_07_22; raw/meeting_transcripts/Meeting started 2026_07_23; raw/meeting_transcripts/Iris Sync - 2026_07_24; raw/meeting_transcripts/Iris Sync - 2026_07_27 12_29 EDT - Notes by Gemini.md.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md
+**Sources**: raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_10 through 2026_08_05

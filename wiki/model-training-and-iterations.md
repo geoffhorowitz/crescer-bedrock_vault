@@ -137,6 +137,35 @@ To allow direct comparison between model recipes (such as V4 baseline vs heavy a
 - **Parallel GPU Execution**: Utilizing available multi-GPU infrastructure to train and evaluate recipes on identical K-fold splits simultaneously (source: Iris Sync - 2026_07_29).
 - **Line-by-Line Reporting**: Model metrics (precision, recall, F1 per fold) will be compared line-by-line across folds rather than reducing each model's performance to a single averaged metric (source: Iris Sync - 2026_07_29).
 
+## July 31 Baseline Confirmation & K-Fold Training Pause
+
+The July 27 V4 model was confirmed as the active baseline for performance evaluation.
+- **Metric Bug Fixes**: Fixed underlying bugs in V4 metric calculations regarding annotation processing and handling overlap thresholds below 0.1 IoU (source: Iris Sync - 2026_07_31).
+- **K-Fold Training Paused**: K-fold model training was halted mid-process after failing to achieve 50% IoU. The root cause was identified as incorrect markings and quality issues in the base ground truth annotations, which are being resolved prior to resuming K-fold runs (source: Iris Sync - 2026_07_31).
+
+## Milestone 2 Closure 3-Tier Proof Strategy
+
+The team established a 3-tier performance comparison structure to finalize Milestone 2 closure (source: Iris Sync - 2026_08_03):
+1. **SOW 1 Baseline Model**: Evaluated on current updated data to demonstrate poor baseline performance.
+2. **Retrained SOW 1 Model**: Fine-tuned on updated data to show moderate improvement but insufficient gain.
+3. **V4 Model**: Evaluated on the same data to demonstrate substantial performance gains driven by Tversky loss, Focal Dice weighting, and 512px input resolution.
+
+## Geographic K-Fold Cross-Validation Implementation
+
+To solve the small validation set constraint (~11 unique UXO objects across datasets) without data leakage:
+- **Spatial & ID Partitioning**: UXOs are segregated into 5 folds using a combination of geographic coordinates (area-based grid cells) and unique object IDs to ensure no spatial or target overlap exists between training and validation folds (source: Iris Sync - 2026_08_03).
+- **Experimental Recipe Plan**: Models V3, V4, and a V3 variant with Tversky loss will be evaluated across the identical 5 K-folds to generate statistically reliable, leak-free metrics (source: Iris Sync - 2026_08_03).
+
+## K-Fold 100m Geographic Grid Split vs. Patch Inference
+
+The spatial partitioning methodology for K-fold cross-validation was updated from 128×128 pixel grids to a **100m × 100m geographic map grid**.
+- **K-Fold Partitioning**: Mapping data to a 100m map grid prevents boundary cutoffs and background data loss that occurred when splitting port and starboard channels using 128×128 pixel tiles (source: Iris Sync - 2026_08_05).
+- **Inference Raster Patches**: Standard model inference continues to utilize 128×128 raster patches. The 100m geographic grid applies specifically to defining cross-validation split boundaries (source: Iris Sync - 2026_08_05).
+
+## V4 Baseline Standard Confirmation
+
+V4 was officially confirmed as the standard baseline model for ongoing development, superseding V3 due to V3's excessive false-positive rate (source: Iris Sync - 2026_08_05).
+
 ## Related pages
 
 - [[synthetic-data-requirements]]
@@ -145,10 +174,13 @@ To allow direct comparison between model recipes (such as V4 baseline vs heavy a
 - [[data-sets-and-curation]]
 - [[bedrock-meeting-transcripts-summary]]
 - [[iris-sync-2026-07-29]]
+- [[iris-sync-2026-07-31]]
+- [[iris-sync-2026-08-03]]
+- [[iris-sync-2026-08-05]]
 - [[internal-bedrock-x-crescerai-initial-sow]]
 - [[sow-1-milestone-2-presentation]]
 - [[lumen-model]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03; raw/meeting_transcripts/Iris Sync - 2026_07_06; raw/meeting_transcripts/Iris Sync - 2026_07_08; raw/meeting_transcripts/Iris Sync - 2026_07_10; raw/meeting_transcripts/Iris Sync - 2026_07_13; raw/meeting_transcripts/Iris Sync - 2026_07_15; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Iris Sync - 2026_07_20; raw/meeting_transcripts/Iris Sync - 2026_07_22; raw/meeting_transcripts/Meeting started 2026_07_23; raw/meeting_transcripts/Iris Sync - 2026_07_24; raw/meeting_transcripts/Iris Sync - 2026_07_27 12_29 EDT - Notes by Gemini.md.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_05; raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_03; raw/meeting_transcripts/Iris Sync - 2026_07_06; raw/meeting_transcripts/Iris Sync - 2026_07_08; raw/meeting_transcripts/Iris Sync - 2026_07_10; raw/meeting_transcripts/Iris Sync - 2026_07_13; raw/meeting_transcripts/Iris Sync - 2026_07_15; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Iris Sync - 2026_07_20; raw/meeting_transcripts/Iris Sync - 2026_07_22; raw/meeting_transcripts/Meeting started 2026_07_23; raw/meeting_transcripts/Iris Sync - 2026_07_24; raw/meeting_transcripts/Iris Sync - 2026_07_27 12_29 EDT - Notes by Gemini.md.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md

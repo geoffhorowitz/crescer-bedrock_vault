@@ -1,6 +1,6 @@
 # Bedrock Discussion: Understanding Eval Agent
 
-**Summary**: July 28, 2026 meeting discussing synthetic data generation strategy shift toward open-source data pre-training, LLM-as-judge evaluation, procedural generation frameworks, and the newly acquired Ulysses dataset.
+**Summary**: July 28, 2026 meeting discussing synthetic data generation strategy shift toward open-source data pre-training, LLM-as-judge evaluation, procedural generation frameworks, and EMD decomposition.
 
 **Last updated**: 2026-07-28
 
@@ -39,9 +39,7 @@ Running generation loops on the entire dataset is infeasible due to token limita
 
 ## Dimensionality Reduction: SVD to EMD
 
-Pratyaksh reported that SVD's top 10 singular values can reconstruct images effectively. Hemanth suggested testing Empirical Mode Decomposition to isolate non-linear components that PCA and SVD struggle with (oscillations in PC4 are not linearly separable). Pratyaksh agreed to test both EMD and frequency domain transforms.
-
-**Note**: The Gemini transcript labels this as "Empirical Mode Decomposition." Based on context, this almost certainly refers to **Earth Mover's Distance** (Wasserstein distance), a metric for comparing distributions, which fits the discussion about evaluating whether synthetic images match the target distribution. EMD is commonly used as a loss/metric in generative model evaluation. The "continuous time domain" phrasing in the transcript is likely a Gemini transcription artifact.
+Pratyaksh reported that SVD's top 10 singular values can reconstruct images effectively. Hemanth suggested testing Empirical Mode Decomposition (EMD) to isolate non-linear components that PCA and SVD struggle with (oscillations in PC4 are not linearly separable). Pratyaksh agreed to test both EMD and frequency domain transforms.
 
 ## VAE Pre-Training Exploration
 
@@ -51,9 +49,7 @@ Hemanth proposed training a Variational Autoencoder to extract components from a
 
 Accepted as a backup strategy if synthetic augmentation proves insufficient. Sachin to share the HTML repository containing image augmentation data on Slack.
 
-## Ulysses Dataset
-
-Sachin presented findings from the newly acquired Ulysses dataset, noting unexpected patterns: varying shades and shapes rather than the expected consistent shading. Hemanth advised against assuming the data structure is fixed, suggesting investigation of potential rotation, flip, or convention discrepancies.
+## Data Convention Policy
 
 The team established a policy to avoid making assumptions about data conventions (rotation, axis orientation) when processing new datasets, instead investigating the base structure first.
 
@@ -65,20 +61,15 @@ The team reached consensus to create a centralized repository for documenting an
 
 Hemanth emphasized that the main objective is to use this project as an opportunity to learn how to generate synthetic data, regardless of how the Bedrock model improves.
 
-Geoff instructed the team to create a new Ulysses Slack channel to document and discuss findings.
-
 ## Next Steps
 
 - [ ] Create a skills repository for shared technical resources
 - [ ] Pratyaksh: share research paper for the 300k open-source image dataset
 - [ ] Test procedural generation using LLM judge on open-source images
-- [ ] Sachin: process Ulysses dataset and run model evaluation
 - [ ] Sachin: create Slack channel for data variation discussions
-- [ ] Sachin: analyze rotation and convention variations in Ulysses data
 - [ ] Pratyaksh: experiment with EMD and frequency domain decomposition
 - [ ] Pratyaksh: set up VAE and report feasibility
 - [ ] Sachin: share image augmentation HTML repository on Slack
-- [ ] Sachin: post Ulysses discussion summary
 
 ## Related pages
 

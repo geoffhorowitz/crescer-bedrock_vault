@@ -4,13 +4,12 @@ Operating conventions for the `project_management/` folder.
 
 ## Files
 
-The folder contains five files:
+The folder contains four files:
 
 - `open-items.md` — Active and resolved action items, blockers, and follow-ups
 - `learnings.md` — Lessons learned, pitfalls, and insights from execution
 - `bedrock-communications.md` — Customer-facing updates, reports sent, and key messages
 - `decisions.md` — Significant decisions with rationale and date
-- `mind-map.md` — Visual mind map and component index of project management workflows
 
 ## When to update
 

@@ -18,7 +18,7 @@ As of July 28, the team shifted strategy: instead of modifying existing Bedrock 
 
 ## Datasets In Use
 
-The team works with five datasets: VW (Vineyard Winds) as the baseline, ENTX with labeled features, DRN (Danish Royal Navy) with small non-ferromagnetic targets, POE (Port of Espoo), and a port background dataset. The Ulysses dataset was acquired July 28 but requires convention investigation before use. An open-source base dataset of ~300k images is also being evaluated as a synthetic generation base. See [[data-sets-and-curation]] for details (source: multiple Iris Sync transcripts, source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
+The team works with five datasets: VW (Vineyard Winds) as the baseline, ENTX with labeled features, DRN (Danish Royal Navy) with small non-ferromagnetic targets, POE (Port of Espoo), and a port background dataset. An open-source base dataset of ~300k images is also being evaluated as a synthetic generation base. See [[data-sets-and-curation]] for details (source: multiple Iris Sync transcripts, source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
 
 ## Outputs
 

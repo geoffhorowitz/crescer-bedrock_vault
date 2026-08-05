@@ -1,15 +1,15 @@
 # Bedrock Meeting Transcripts Summary
 
-**Summary**: Consolidated summary of 27 internal and Bedrock meeting transcripts from June 12 through July 29, 2026, covering model training progress, data pipeline decisions, magnetometer processing, milestone planning, hyperparameter benchmarking, data cleaning impacts, K-fold validation, UXO/AOI class merging, Flux Turbo LoRA synthetic generation, V4 false-positive penalty weighting, LLM validation agent loops, and July 28 strategy shift to open-source base data with LLM-as-judge procedural generation.
+**Summary**: Consolidated summary of 30 internal and Bedrock meeting transcripts from June 12 through August 5, 2026, covering model training progress, data pipeline decisions, magnetometer processing, milestone planning, hyperparameter benchmarking, data cleaning impacts, K-fold validation, UXO/AOI class merging, Flux Turbo LoRA synthetic generation, V4 false-positive penalty weighting, LLM validation agent loops, July 28 strategy shift, July 31 latent diffusion/pixel crops, August 3 Milestone 2 closure & geographic K-fold splits, and August 5 100m geo-grid K-fold partitioning & generative image decomposition.
 
-**Last updated**: 2026-07-29
+**Last updated**: 2026-08-05
 
 ---
 
 ## Timeframe and Sources
 
-This page synthesizes 26 meeting transcripts spanning from June 12, 2026 through July 28, 2026:
-- 20 weekly Iris Sync meetings (internal Crescer standups through July 27, 2026)
+This page synthesizes 30 meeting transcripts spanning from June 12, 2026 through August 5, 2026:
+- 23 weekly Iris Sync meetings (internal Crescer standups through August 5, 2026)
 - 1 Bedrock discussion continuation (June 23, 2026)
 - 1 Bedrock magnetometer discussion with Francisco Bolivar (July 1, 2026)
 - 1 Bedrock connect meeting (July 17, 2026)
@@ -303,15 +303,11 @@ Two complementary approaches proposed by Hemanth: (1) hill-climbing optimization
 
 ### Dimensionality Reduction Transition
 
-Moving from SVD/PCA to Earth Mover's Distance for evaluating non-linear distribution components between synthetic and real images. SVD reconstructs well from top 10 singular values but PCA struggles with non-linear oscillations. Pratyaksh to test EMD and frequency domain transforms (source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
+Moving from SVD/PCA to Empirical Mode Decomposition (EMD) for isolating non-linear components between synthetic and real images. SVD reconstructs well from top 10 singular values but PCA struggles with non-linear oscillations. Pratyaksh to test EMD and frequency domain transforms (source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
 
 ### VAE Pre-Training Exploration
 
 Hemanth proposed training a VAE to extract components from an embedding space/codebook. Pratyaksh to explore VAE or diffusion pre-training on open-source data and report feasibility (source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
-
-### Ulysses Dataset Issues
-
-Newly acquired Ulysses data shows unexpected varying shades and shapes. The team established a no-assumption policy: investigate rotation, flip, or convention discrepancies before concluding data quality issues (source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
 
 ### 25 Pixel-Based Augmentations Accepted
 
@@ -347,6 +343,48 @@ Hemanth proposed a 5-step blending pipeline: (1) generate background, (2) copy-p
 
 Shifted from XTF-level raw amplitude operations to runtime image-domain augmentations (OpenCV Poisson copy-paste, rotation/scaling matrices, shadow additions). XTF operations suffered from gradient mismatch and dataset scaling discrepancies (e.g. VW object transfer to ANTX). Standardized pixel blending logic to take the mean of overlapping pixels rather than summing to avoid clipping/overflow (>255) (source: Iris Sync - 2026_07_29).
 
+## July 31 Updates
+
+### Sonar Data Categorization Protocol
+Established a file categorization protocol splitting sonar scan files into XTF and DRN groups. Each group represents a unique object across multiple scan passes, accounting for duplicate passes appropriately (source: Iris Sync - 2026_07_31).
+
+### Model Training Status & Bug Fixes
+Confirmed the July 27 V4 model remains the baseline. Fixed V4 metric bugs regarding annotation processing and overlaps < 0.1 IoU. Paused K-fold model training mid-process after failing to reach 50% IoU due to underlying base ground truth annotation issues (source: Iris Sync - 2026_07_31).
+
+### Pixel Crop Pivot & LoRA Model Generation
+Pivoted from manipulating raw sensor values in XTF files to using pixel crops for object manipulation. Fine-tuning a LoRA model on 144 object crop examples for novel synthetic object generation (source: Iris Sync - 2026_07_31).
+
+### Latent Space Dataset Pruning & EMD App Tooling
+Proposed using latent space distance metrics (such as FID) to evaluate generated image distributions, enabling semi-automated dataset pruning and avoiding duplicates. Planned an interactive EMD application for visualizing decomposed intrinsic mode functions (IMFs) (source: Iris Sync - 2026_07_31).
+
+## August 3 Updates
+
+### Milestone 2 Closure 3-Tier Proof Strategy
+Established a 3-tier proof structure for the Milestone 2 presentation: (1) baseline SOW 1 model performance, (2) retrained SOW 1 model performance, and (3) V4 model performance gains (driven by Tversky loss and Focal Dice weighting). Sachin preparing slides detailing false positive and false negative analysis (source: Iris Sync - 2026_08_03).
+
+### Geographic K-Fold Cross-Validation & Data Leakage Avoidance
+Implemented spatial partitioning across 5 K-folds using geographic coordinates and object IDs to ensure zero data leakage between training and validation folds. This addresses the small validation set constraint (~11 unique UXO objects) (source: Iris Sync - 2026_08_03).
+
+### Synthetic Data Strategy & Guidance/Step Benchmarking
+Restricted M2 synthetic training additions to verified cut-and-paste object placement due to V4 automated augmentation recall drops. Real AOI data is reserved for validation, while training uses real backgrounds + synthetic foreground objects (closed-source prompt engineering by Ratul + procedural agent by Sachin). Evaluated flow matching background model parameters (classifier guidance weight 1 preserves quality; 25 diffusion steps outperform 10 steps on low-representation datasets) (source: Iris Sync - 2026_08_03).
+
+### ResNet-50 Embedding Noise Filtering & SoCal Mission Data
+Implemented DBSCAN clustering on ResNet-50 embeddings to isolate distorted synthetic images. Evaluated ~300 side-scan XTF files (2km x 2km, >1000 contacts) from Southern California; agreed to run qualitative inference with the V4 model first before deciding on manual labeling (source: Iris Sync - 2026_08_03).
+
+## August 5 Updates
+
+### K-Fold 100m Geographic Grid Partitioning vs. Patch Inference
+Transitioned K-fold cross-validation spatial dataset partitioning from 128x128 pixel grids to a 100m x 100m geographic map grid to eliminate boundary cutoffs and background data loss when separating port and starboard channels. Standard model inference continues using 128x128 raster patches (source: Iris Sync - 2026_08_05).
+
+### V4 Baseline Standard & Object-Level Metric Priority
+Confirmed V4 model as baseline standard (superseding V3 due to V3 false positive rates). Prioritized object-level precision and recall metrics over pixel-level IoU. Determined K-fold cross-validation is omitted for unseen client test data since models are not retrained on it (source: Iris Sync - 2026_08_05).
+
+### Inference Filters & Class Deliverable Configurations
+Mandated a minimum pixel size filter (2,000–3,000 pixels for AOI Big) and class output configurations to isolate UXO and combined small black objects while excluding unwanted non-targets (source: Iris Sync - 2026_08_05).
+
+### Synthetic Generation, GAN Shelving & Decomposition Prototypes
+Ratul generated novel UXO object crops using GPT / nano banana image-to-image prompts while preserving blob structures. GANs were formally shelved due to data volume limits and instability; LoRA was confirmed ineffective. Hemanth introduced image decomposition prototypes (structure, speckle, base layer separation via EMD-like algorithms) to naturally blend crops into backgrounds. Explored VGG sand ripples and style transfer remixing; confirmed FFT is ineffective (source: Iris Sync - 2026_08_05).
+
 ## Related pages
 
 - [[magnetometer-processing-pipeline]]
@@ -356,7 +394,10 @@ Shifted from XTF-level raw amplitude operations to runtime image-domain augmenta
 - [[data-quality-and-gaps]]
 - [[data-sets-and-curation]]
 - [[iris-sync-2026-07-29]]
+- [[iris-sync-2026-07-31]]
+- [[iris-sync-2026-08-03]]
+- [[iris-sync-2026-08-05]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_07_29 (all 21 transcripts); raw/meeting_transcripts/Bedrock Discussion Cont - 2026_06_23; raw/meeting_transcripts/Bedrock__Crescer_ Mag Discussion - 2026_07_01; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Meeting started 2026_07_23 15_29 EDT - Notes by Gemini.md; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_05 (all 24 transcripts); raw/meeting_transcripts/Bedrock Discussion Cont - 2026_06_23; raw/meeting_transcripts/Bedrock__Crescer_ Mag Discussion - 2026_07_01; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Meeting started 2026_07_23 15_29 EDT - Notes by Gemini.md; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md

@@ -30,10 +30,6 @@ Used as a background dataset for training. Provides varied backgrounds for testi
 
 Additional background dataset lacking annotations. Used as a test set to assess model performance on varied backgrounds and monitor false positives (source: Iris Sync - 2026_07_08).
 
-### Ulysses Dataset
-
-Newly acquired dataset presented by Sachin Pandey on July 28 showing unexpected patterns: varying shades and shapes rather than the expected consistent shading. The team advised investigating potential rotation, flip, or convention discrepancies before concluding the data is inherently flawed. Policy established to avoid assumptions about data conventions (rotation, axis orientation) when processing new datasets (source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
-
 ### Open-Source Base Dataset (~300k Images)
 
 Pratyaksh identified an open-source dataset of approximately 300k images to serve as a base for synthetic generation rather than modifying existing Bedrock data. The research paper describing this dataset is pending review (source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
@@ -116,18 +112,28 @@ The team established a policy to retain all provided images in the validation se
 
 ### No-Assumption Policy for New Datasets
 
-The team established a policy to avoid making assumptions about data conventions (rotation, axis orientation, coordinate systems) when processing newly acquired datasets. Instead, the base structure should be investigated empirically before drawing conclusions about data quality or content. This was prompted by issues with the Ulysses dataset (source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
+The team established a policy to avoid making assumptions about data conventions (rotation, axis orientation, coordinate systems) when processing newly acquired datasets. Instead, the base structure should be investigated empirically before drawing conclusions about data quality or content (source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
 
 ### Open-Source Base-Data Strategy
 
 The team shifted strategy for synthetic data generation: instead of modifying existing Bedrock data (which produces outputs indistinguishable from standard augmentations), the new approach uses open-source data (~300k images) as a base and converts it to the target distribution using a procedural generation pipeline with an LLM judge (source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
 
-### Standardized Patch Sizing & Directory Alignment (July 29)
+### Southern California Mission Dataset (August 3)
 
-The team standardized data preparation across VW, ANTX, and DRN datasets:
-- **Patch Sizes**: Image patches standardized to 128x128 and 256x256 pixel dimensions.
-- **Mask Format**: Annotation masks formatted and saved as PNG files (`0`/`1` mask values).
-- **Directory Layout**: Train and validation folder structures aligned across all datasets to support automated loading in diffusion and classification pipelines (source: Iris Sync - 2026_07_29).
+Bedrock (Bridget) provided a new side-scan sonar dataset collected off the coast of Southern California:
+- **Coverage & Files**: Covers a 2 km × 2 km area comprising ~300 side-scan XTF files with >1,000 real-time / post-processed picked contacts (source: Iris Sync - 2026_08_03).
+- **Ground Truth Status**: Currently lacks ground truth verification from Navy/client sources.
+- **Evaluation Strategy**: Geoff uploaded the files to Wall-E. The team agreed to run qualitative model inference first with the V4 model to assess performance before deciding whether to commit resources to manual labeling or incorporate it into future training milestones (source: Iris Sync - 2026_08_03).
+
+### 100m Geographic Map Grid K-Fold Partitioning (August 5)
+
+To prevent boundary cutoffs and background region loss when separating port and starboard channels into 128×128 pixel tiles, the team transitioned K-fold cross-validation spatial dataset partitioning to a **100m × 100m geographic map grid**. General model inference continues using 128×128 raster patches (source: Iris Sync - 2026_08_05).
+
+### Synthetic Background Dataset Suitability (August 5)
+
+When selecting background datasets for compositing synthetic targets (source: Iris Sync - 2026_08_05):
+- **Recommended**: **VW** (Vineyard Winds) and **DRN** (Danish Royal Navy) are preferred due to clean background textures.
+- **Deprioritized**: **ENTX** (contains repeating BRB 006 artifacts), **ICS** (poor visual quality), and **POE** (excessive chain artifacts) produce noisy composite results.
 
 ## Related pages
 
@@ -137,7 +143,10 @@ The team standardized data preparation across VW, ANTX, and DRN datasets:
 - [[data-quality-and-gaps]]
 - [[bedrock-meeting-transcripts-summary]]
 - [[iris-sync-2026-07-29]]
+- [[iris-sync-2026-07-31]]
+- [[iris-sync-2026-08-03]]
+- [[iris-sync-2026-08-05]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03; raw/meeting_transcripts/Iris Sync - 2026_07_06; raw/meeting_transcripts/Iris Sync - 2026_07_08; raw/meeting_transcripts/Iris Sync - 2026_07_10; raw/meeting_transcripts/Iris Sync - 2026_07_13; raw/meeting_transcripts/Iris Sync - 2026_07_15; raw/meeting_transcripts/Iris Sync - 2026_07_17; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Iris Sync - 2026_07_20; raw/meeting_transcripts/Iris Sync - 2026_07_22; raw/meeting_transcripts/Iris Sync - 2026_07_24; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_05; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md

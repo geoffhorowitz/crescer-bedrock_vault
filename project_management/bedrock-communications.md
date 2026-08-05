@@ -2,12 +2,14 @@
 
 **Summary**: Customer-facing updates, reports sent, and key messages with Bedrock.
 
-**Last updated**: 2026-07-18
+**Last updated**: 2026-08-03
 
 ---
 
 Open
-- ~~**2026-07-17** - **Connect Meeting on Metrics and Data**: Sync meeting with Bridget (Bedrock) to review progress. We established a dual-threshold (0.1/0.5 IOU) reporting strategy to demonstrate detection capabilities at varying strictness levels. Bedrock confirmed that only 10-11 unique UXO objects exist in the dataset and no more will be provided.-~~- The team agreed to document all data exclusion reasons, and discussed moving ambiguous small black artifacts to the black patch category (source: Bedrock connect - 2026_07_17).
+- **2026-08-03** - **Southern California Mission Data Acquisition**: Bridget (Bedrock) shared a new dataset covering 2km x 2km (~300 XTF files, >1,000 picked contacts) off Southern California. The data currently lacks ground truth; Crescer will perform qualitative inference using the V4 model before deciding on manual labeling (source: Iris Sync - 2026_08_03).
+- **2026-08-03** - **Milestone 2 Closure Presentation Setup**: Sachin preparing 3-tier proof presentation (SOW 1 baseline vs retrained SOW 1 vs V4 model) for client review to close out Milestone 2 (source: Iris Sync - 2026_08_03).
+- ~~**2026-07-17** - **Connect Meeting on Metrics and Data**: Sync meeting with Bridget (Bedrock) to review progress. We established a dual-threshold (0.1/0.5 IOU) reporting strategy to demonstrate detection capabilities at varying strictness levels. Bedrock confirmed that only 10-11 unique UXO objects exist in the dataset and no more will be provided. The team agreed to document all data exclusion reasons, and discussed moving ambiguous small black artifacts to the black patch category (source: Bedrock connect - 2026_07_17).~~
 - ~~**2026-07-08** - **Slack Query on Output Classes**: The team planned to message Bedrock on Slack to clarify whether they prefer binary target/non-target or multi-class outputs for the final deliverables (source: Iris Sync - 2026_07_08).~~ resolved during meeting with Bridgit - preference for mutliclass but binary on UXO is MVP
 
 Resolved
