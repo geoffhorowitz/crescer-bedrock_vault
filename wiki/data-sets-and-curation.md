@@ -135,6 +135,12 @@ When selecting background datasets for compositing synthetic targets (source: Ir
 - **Recommended**: **VW** (Vineyard Winds) and **DRN** (Danish Royal Navy) are preferred due to clean background textures.
 - **Deprioritized**: **ENTX** (contains repeating BRB 006 artifacts), **ICS** (poor visual quality), and **POE** (excessive chain artifacts) produce noisy composite results.
 
+### Treasure Island Dataset & Artificial UXO Fix (August 7)
+
+- **Treasure Island Evaluation Dataset**: Client provided the new Treasure Island dataset. Established model performance validation on Treasure Island as a mandatory deliverable for Milestone 2 completion (source: Iris Sync - 2026_08_07).
+- **Artificial UXO Annotation Bug Correction**: Discovered that previous artificial copy-paste evaluation data had missing ground truth annotations when base images already contained pre-existing UXO targets. Corrected the ground truth labels to allow training a dedicated copy-paste model run (source: Iris Sync - 2026_08_07).
+- **Swedish Rockan Mine Reference**: Bridget shared documentation regarding a potential Swedish-made Rockan mine-like object (MLO) for target cataloging (source: Iris Sync - 2026_08_07).
+
 ## Related pages
 
 - [[model-training-and-iterations]]
@@ -146,7 +152,8 @@ When selecting background datasets for compositing synthetic targets (source: Ir
 - [[iris-sync-2026-07-31]]
 - [[iris-sync-2026-08-03]]
 - [[iris-sync-2026-08-05]]
+- [[iris-sync-2026-08-07]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_05; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_07; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md

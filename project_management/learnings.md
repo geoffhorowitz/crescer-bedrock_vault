@@ -2,10 +2,12 @@
 
 **Summary**: Lessons learned, pitfalls, and insights from execution on the Bedrock ATR project.
 
-**Last updated**: 2026-08-05
+**Last updated**: 2026-08-07
 
 ---
 
+- **2026-08-07** - **Diffusion Blob Limitations for Target Synthesis**: Diffusion models fail to capture discrete structural morphology for small sonar targets, outputting unstructured "blobs." Programmatic VLM/LLM procedural code generation using basic geometric primitives (circles, ovals, teardrops, cylinders) with vertex jittering produces superior structural realism for synthetic UXO objects (source: Iris Sync - 2026_08_07).
+- **2026-08-07** - **Artificial Evaluation Annotation Omissions**: Discovered that poor baseline performance on artificial copy-paste test sets was caused by un-annotated pre-existing UXOs in base images rather than model failure. Fixing missing base-image annotations is critical before evaluating copy-paste robustness (source: Iris Sync - 2026_08_07).
 - **2026-08-05** - **Geographic Map Grid vs. Raster Patch Inference Scope**: Transitioning K-fold cross-validation spatial dataset partitioning to a 100m x 100m map grid prevents boundary cutoffs and background region loss when separating port/starboard channels. Crucially, this geographic grid applies specifically to spatial partitioning boundaries, whereas standard model inference continues to operate on 128x128 raster patches (source: Iris Sync - 2026_08_05).
 - **2026-08-05** - **Object-Level vs Pixel-Level Metric Clarity**: Evaluating model iterations using pixel-level IoU creates misleading comparisons because background and large target classes dominate pixel counts. Object-level precision and recall metrics accurately assess detection performance and prevent false conclusions about model superiority (source: Iris Sync - 2026_08_05).
 - **2026-08-03** - **Classifier Guidance Weight Sensitivity in Flow Matching**: When generating synthetic backgrounds using flow matching models, unweighted or low classifier guidance weights (weight=1) produce realistic, in-distribution sonar textures. Higher guidance weights (weight=2 to 5) severely distort image structure and darken textures across all datasets (source: Iris Sync - 2026_08_03).

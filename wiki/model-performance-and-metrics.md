@@ -131,6 +131,19 @@ To refine inference outputs on new datasets:
 - **Class Output Configuration**: Established output configuration settings so client deliverables focus on UXO and combined small black objects while suppressing unwanted classifications (source: Iris Sync - 2026_08_05).
 - **K-Fold Omission for Unseen Data**: Omitted K-fold evaluation structures when predicting on brand-new unseen datasets (since models are not retrained on that data), prioritizing direct performance visualization (source: Iris Sync - 2026_08_05).
 
+## Four-Bucket Confusion Matrix Reporting Strategy (August 7)
+
+Hemanth Sarabu proposed a hierarchical four-bucket reporting framework to present model performance trade-offs to stakeholders clearly (source: Iris Sync - 2026_08_07):
+- **Tier 1 (High-Level Categorization)**: Evaluates high-level separation between:
+  1. `UXO-like` (True UXO, AOI Small Black)
+  2. `Non-UXO-like` (AOI Big, Black Patch / windmill supports)
+  3. `Background noise`
+  - *Goal*: Demonstrate nearly zero off-diagonal misclassifications between UXO-like objects, non-UXO-like objects, and background noise.
+- **Tier 2 (Zoomed-In Target Sensitivity)**: Evaluates detailed classification within the `UXO-like` category (`True UXO` vs. `Not True UXO` / `AOI Small Black`).
+  - *Goal*: Demonstrate high recall for true UXOs (minimizing false negatives) while contextualizing lower precision (false positives resulting from misclassifications among visually similar UXO-like objects).
+- **Precision Floor Warning**: Geoff Horowitz cautioned that while high recall on true UXO targets is the primary goal, precision must maintain a baseline selectivity floor so client teams are not overwhelmed by manual verification of non-UXO contacts.
+- **Treasure Island Evaluation Target**: Established performance validation on the new Treasure Island dataset as a core completion requirement for Milestone 2.
+
 ## Related pages
 
 - [[automated-target-recognition]]
@@ -144,10 +157,11 @@ To refine inference outputs on new datasets:
 - [[iris-sync-2026-07-31]]
 - [[iris-sync-2026-08-03]]
 - [[iris-sync-2026-08-05]]
+- [[iris-sync-2026-08-07]]
 - [[internal-bedrock-x-crescerai-initial-sow]]
 - [[sow-1-milestone-2-presentation]]
 - [[bedrock-sow-2]]
 
 ---
 
-**Sources**: raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_10 through 2026_08_05
+**Sources**: raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_10 through 2026_08_07; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md

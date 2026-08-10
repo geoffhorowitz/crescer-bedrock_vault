@@ -251,6 +251,15 @@ Explored additional generative methods for sonar texture simulation (source: Iri
 - **Style Transfer Remixing**: Blends content and style images to remix sonar background textures.
 - **FFT Inefficacy**: Confirmed Fast Fourier Transform (FFT) analysis is ineffective for sonar wave texture manipulation.
 
+## VLM Code-Based Procedural Generation & Diffusion Abandonment (August 7)
+
+Empirical evaluation led to a major shift in target generation strategy (source: Iris Sync - 2026_08_07):
+- **Diffusion Abandonment**: Shelved diffusion-based target object generation because diffusion models failed to produce coherent target structures, outputting unstructured "blobs."
+- **VLM Code-Based Procedural Generation**: Pivoted to generating target shapes programmatically via VLM/LLM-written code. Categorized target morphologies into four basic geometric classes: circles, ovals, teardrops (water drop shapes), and cylindrical/cone shapes. Shapes are generated dynamically by manipulating polygon vertices and applying targeted intensity darkening.
+- **VLM Input Method Benchmarking**: Evaluating two VLM input formats for code generation: (1) close-cropped target images (retaining immediate background context to inform lighting/shadow directions) versus (2) background-stripped/transparent target images (focusing purely on target morphology).
+- **100k Synthetic Cluster Visualization App**: Pratyaksh generated ~100,000 synthetic targets, clustered them via embedding maps (UMAP/t-SNE), and built a side-by-side visualization app (JSON cluster map) allowing interactive comparison of real versus generated samples.
+- **Restoration of Cut-and-Paste Training Data**: Confirmed that omitting direct copy-paste augmentation in V4 caused a drop in model robustness. Identified that previous artificial evaluation issues were caused by un-annotated base image UXOs; resolved to train a dedicated model incorporating corrected cut-and-paste data for Milestone 2 completion.
+
 ## Related pages
 
 - [[automated-target-recognition]]
@@ -262,7 +271,8 @@ Explored additional generative methods for sonar texture simulation (source: Iri
 - [[iris-sync-2026-07-31]]
 - [[iris-sync-2026-08-03]]
 - [[iris-sync-2026-08-05]]
+- [[iris-sync-2026-08-07]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_05; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_07; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md

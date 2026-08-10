@@ -2,12 +2,21 @@
 
 **Summary**: Active and resolved action items, blockers, and follow-ups for the Bedrock ATR project.
 
-**Last updated**: 2026-08-05
+**Last updated**: 2026-08-07
 
 ---
 
 ## Active items
 
+- **2026-08-07** - **Model Performance Comparison Table**: Sachin to analyze and document fine-tuned performance comparing baseline vs V4 versions (source: Iris Sync - 2026_08_07). [Status: Open]
+- **2026-08-07** - **Sand Ripple Integration Review**: Pratyaksh to review Hemanth's sand ripple artifacts by Monday for potential integration (source: Iris Sync - 2026_08_07). [Status: Open]
+- **2026-08-07** - **Real vs Generated Visualization App**: Pratyaksh to build side-by-side app comparing real vs generated synthetic samples (source: Iris Sync - 2026_08_07). [Status: Open]
+- **2026-08-07** - **Claude Procedural Generation Evaluation**: Pratyaksh to evaluate procedural object code generation using Claude (source: Iris Sync - 2026_08_07). [Status: Open]
+- **2026-08-07** - **100k Cluster Visualization App**: Pratyaksh to complete the 100k generated cluster visualization app (source: Iris Sync - 2026_08_07). [Status: Open]
+- **2026-08-07** - **Cross-Validation Metrics Completion**: Sachin to complete cross-validation metrics and share results (source: Iris Sync - 2026_08_07). [Status: Open]
+- **2026-08-07** - **Cut-and-Paste Model Training Run**: Sachin to incorporate cut-and-paste data into model training and verify performance against base model (source: Iris Sync - 2026_08_07). [Status: Open]
+- **2026-08-07** - **Treasure Island Dataset Evaluation**: Team to assess model performance on the new Treasure Island dataset (source: Iris Sync - 2026_08_07). [Status: Open]
+- **2026-08-07** - **MAG Data & Ground Truth Correlation**: Ratul to correlate MAG data analysis with ground truth annotations for Milestone 3 (source: Iris Sync - 2026_08_07). [Status: Open]
 - **2026-08-05** - **V4 Performance Report Sharing**: Sachin to share HTML performance report detailing V4 object-level results across folds (source: Iris Sync - 2026_08_05). [Status: Open]
 - **2026-08-05** - **V4 Inference & Notion Documentation**: Sachin to run V4 inference on new data and update model overview in Notion with K-fold and inference metrics (source: Iris Sync - 2026_08_05). [Status: Open]
 - **2026-08-05** - **Synthetic AOI Small Black Generation**: Ratul to produce remaining synthetic AOI small black object crops using GPT prompts (source: Iris Sync - 2026_08_05). [Status: Open]

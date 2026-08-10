@@ -2,10 +2,15 @@
 
 **Summary**: Significant decisions made by the team or client, with rationale and date.
 
-**Last updated**: 2026-08-05
+**Last updated**: 2026-08-07
 
 ---
 
+- **2026-08-07** - **Diffusion Abandonment & VLM Procedural Generation Pivot**: Shelved diffusion models for UXO target generation due to unstructured "blob" outputs. Pivoted to VLM/LLM code-based procedural generation across four shape categories (circles, ovals, teardrops, cylinders/cones) with vertex jittering and intensity darkening (source: Iris Sync - 2026_08_07).
+- **2026-08-07** - **Zero-F1 Early Stopping Criteria**: Mandated terminating K-fold training runs early if F1 score reaches 0 to conserve GPU compute and avoid training failed configs (source: Iris Sync - 2026_08_07).
+- **2026-08-07** - **Four-Bucket Confusion Matrix Framework**: Adopted a 4-bucket reporting strategy (UXO-like, non-UXO-like, background, and True UXO breakdown) to communicate high recall performance on true UXOs while managing precision expectations with stakeholders (source: Iris Sync - 2026_08_07).
+- **2026-08-07** - **Cut-and-Paste Training Restoration**: Resolved to train a dedicated model incorporating corrected cut-and-paste data (fixing missing base-image annotations) for Milestone 2 completion (source: Iris Sync - 2026_08_07).
+- **2026-08-07** - **Best Model Sharing Deferment Policy**: Agreed to defer external delivery of the best-performing model until the subsequent milestone to demonstrate continuous step-by-step performance improvements (source: Iris Sync - 2026_08_07).
 - **2026-08-05** - **100m Geographic Map Grid K-Fold Partitioning**: Shifted K-fold cross-validation spatial dataset partitioning from 128×128 pixel tiles to a 100m × 100m geographic map grid to eliminate boundary cutoffs and background data loss when separating port/starboard channels. General model inference continues using 128×128 raster patches (source: Iris Sync - 2026_08_05).
 - **2026-08-05** - **V4 Standard Baseline Confirmation**: Formally confirmed V4 as the standard baseline model for ongoing development, superseding V3 due to V3's high false-positive rate (source: Iris Sync - 2026_08_05).
 - **2026-08-05** - **GAN Discontinuation**: Formally shelved GAN-based synthetic generation due to high data volume requirements and model instability; confirmed LoRA fine-tuning is ineffective for target generation (source: Iris Sync - 2026_08_05).

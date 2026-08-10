@@ -1,15 +1,15 @@
 # Bedrock Meeting Transcripts Summary
 
-**Summary**: Consolidated summary of 30 internal and Bedrock meeting transcripts from June 12 through August 5, 2026, covering model training progress, data pipeline decisions, magnetometer processing, milestone planning, hyperparameter benchmarking, data cleaning impacts, K-fold validation, UXO/AOI class merging, Flux Turbo LoRA synthetic generation, V4 false-positive penalty weighting, LLM validation agent loops, July 28 strategy shift, July 31 latent diffusion/pixel crops, August 3 Milestone 2 closure & geographic K-fold splits, and August 5 100m geo-grid K-fold partitioning & generative image decomposition.
+**Summary**: Consolidated summary of 31 internal and Bedrock meeting transcripts from June 12 through August 7, 2026, covering model training progress, data pipeline decisions, magnetometer processing, milestone planning, hyperparameter benchmarking, data cleaning impacts, K-fold validation, UXO/AOI class merging, Flux Turbo LoRA synthetic generation, V4 false-positive penalty weighting, LLM validation agent loops, July 28 strategy shift, July 31 latent diffusion/pixel crops, August 3 Milestone 2 closure & geographic K-fold splits, August 5 100m geo-grid K-fold partitioning, and August 7 VLM procedural generation & 4-bucket reporting framework.
 
-**Last updated**: 2026-08-05
+**Last updated**: 2026-08-07
 
 ---
 
 ## Timeframe and Sources
 
-This page synthesizes 30 meeting transcripts spanning from June 12, 2026 through August 5, 2026:
-- 23 weekly Iris Sync meetings (internal Crescer standups through August 5, 2026)
+This page synthesizes 31 meeting transcripts spanning from June 12, 2026 through August 7, 2026:
+- 24 weekly Iris Sync meetings (internal Crescer standups through August 7, 2026)
 - 1 Bedrock discussion continuation (June 23, 2026)
 - 1 Bedrock magnetometer discussion with Francisco Bolivar (July 1, 2026)
 - 1 Bedrock connect meeting (July 17, 2026)
@@ -385,6 +385,20 @@ Mandated a minimum pixel size filter (2,000–3,000 pixels for AOI Big) and clas
 ### Synthetic Generation, GAN Shelving & Decomposition Prototypes
 Ratul generated novel UXO object crops using GPT / nano banana image-to-image prompts while preserving blob structures. GANs were formally shelved due to data volume limits and instability; LoRA was confirmed ineffective. Hemanth introduced image decomposition prototypes (structure, speckle, base layer separation via EMD-like algorithms) to naturally blend crops into backgrounds. Explored VGG sand ripples and style transfer remixing; confirmed FFT is ineffective (source: Iris Sync - 2026_08_05).
 
+## August 7 Updates
+
+### VLM Code-Based Procedural Generation Pivot & Diffusion Shelving
+Shelved diffusion-based object generation due to unstructured "blob" outputs. Transitioned to VLM/LLM code-driven procedural generation targeting four geometric shape categories (circles, ovals, teardrops, cylinders/cones). Testing close-cropped vs. background-stripped inputs. Pratyaksh generated ~100k synthetic images with embedding clusters and is developing a side-by-side visualization app (source: Iris Sync - 2026_08_07).
+
+### Model V4 K-Fold Benchmarks, Early Stopping & Cut-and-Paste Restoration
+Confirmed base V4 overfits without augmentations due to false negative penalties; augmented V4 yields ~90% recall with ~20–50% precision. Implemented an early stopping rule if F1 score drops to 0. Restored copy-paste data into training (correcting base image annotation errors from earlier artificial evaluation sets) (source: Iris Sync - 2026_08_07).
+
+### Four-Bucket Matrix Reporting Strategy & Precision/Recall Balance
+Established a 4-bucket reporting framework (UXO-like, non-UXO-like, background, and True UXO breakdown) to communicate high recall performance on true UXOs while managing precision expectations with stakeholders (source: Iris Sync - 2026_08_07).
+
+### Milestone 2 Completion & Milestone 3 Scope
+Finalized Milestone 2 deliverables: (1) 5-fold cross-validation metrics, (2) cut-and-paste augmented model training, and (3) Treasure Island dataset evaluation. Resuming MAG data correlation for Milestone 3 next week. Cataloged Swedish Rockan mine-like object (MLO) documentation (source: Iris Sync - 2026_08_07).
+
 ## Related pages
 
 - [[magnetometer-processing-pipeline]]
@@ -397,7 +411,8 @@ Ratul generated novel UXO object crops using GPT / nano banana image-to-image pr
 - [[iris-sync-2026-07-31]]
 - [[iris-sync-2026-08-03]]
 - [[iris-sync-2026-08-05]]
+- [[iris-sync-2026-08-07]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_05 (all 24 transcripts); raw/meeting_transcripts/Bedrock Discussion Cont - 2026_06_23; raw/meeting_transcripts/Bedrock__Crescer_ Mag Discussion - 2026_07_01; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Meeting started 2026_07_23 15_29 EDT - Notes by Gemini.md; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_07 (all 25 transcripts); raw/meeting_transcripts/Bedrock Discussion Cont - 2026_06_23; raw/meeting_transcripts/Bedrock__Crescer_ Mag Discussion - 2026_07_01; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Meeting started 2026_07_23 15_29 EDT - Notes by Gemini.md; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md
