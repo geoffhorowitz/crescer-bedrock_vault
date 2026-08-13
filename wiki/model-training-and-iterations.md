@@ -2,7 +2,7 @@
 
 **Summary**: Progress on model training across multiple iterations, including architecture comparisons, class strategy decisions, test set selection, hyperparameter searches, augmentation combinations, V3/V4 model performance, and model lineage documentation.
 
-**Last updated**: 2026-07-29
+**Last updated**: 2026-08-10
 
 ---
 
@@ -174,6 +174,17 @@ Results from preliminary 5-fold cross-validation runs on V4 variants led to new 
 - **Dedicated Cut-and-Paste Model**: Resolved to train a dedicated model incorporating corrected cut-and-paste data to test whether copy-paste augmentations restore robustness prior to closing Milestone 2.
 - **Model Deferment Policy**: Agreed to defer external delivery of the best-performing model until the subsequent milestone to demonstrate continuous step-by-step performance improvements to stakeholders.
 
+## August 10 Model Selection & Leading Candidate Status
+
+The team evaluated 5-fold cross-validation results across ~20 trained models to finalize model selection for Milestone 2 (source: Iris Sync - 2026_08_10):
+- **V4 AUG Highest Recall**: Version 4 with image augmentation filters consistently demonstrated the highest recall across all validation folds. Lower precision was deemed acceptable and manageable via post-processing filters.
+- **Leading Candidate (V4 AUG + Cut-and-Paste)**: The team designated the **V4 AUG + Cut-and-Paste** model configuration as the leading candidate for the final Milestone 2 deliverable. Final cross-validation testing is underway to validate its performance before formal selection.
+- **Model Lineage Clarification**:
+  - **V3**: Includes copy-paste target augmentation.
+  - **V4**: Employs image-space augmentation filters (color, noise, contrast) without copy-paste.
+  - **V4 AUG + Cut-and-Paste**: Combines V4 image augmentation filters with cut-and-paste foreground targets.
+- **Final Data Re-Labeling & Cleaning Pass**: Following false positive analysis that surfaced ~1–5% unlabeled real UXO targets in base ground truth, the team approved one final, rapid re-labeling and cleaning pass to correct missing annotations and improve precision before final training.
+
 ## Related pages
 
 - [[synthetic-data-requirements]]
@@ -181,15 +192,17 @@ Results from preliminary 5-fold cross-validation runs on V4 variants led to new 
 - [[model-performance-and-metrics]]
 - [[data-sets-and-curation]]
 - [[bedrock-meeting-transcripts-summary]]
+- [[onboard-deployment]]
 - [[iris-sync-2026-07-29]]
 - [[iris-sync-2026-07-31]]
 - [[iris-sync-2026-08-03]]
 - [[iris-sync-2026-08-05]]
 - [[iris-sync-2026-08-07]]
+- [[iris-sync-2026-08-10]]
 - [[internal-bedrock-x-crescerai-initial-sow]]
 - [[sow-1-milestone-2-presentation]]
 - [[lumen-model]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_07; raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_03; raw/meeting_transcripts/Iris Sync - 2026_07_06; raw/meeting_transcripts/Iris Sync - 2026_07_08; raw/meeting_transcripts/Iris Sync - 2026_07_10; raw/meeting_transcripts/Iris Sync - 2026_07_13; raw/meeting_transcripts/Iris Sync - 2026_07_15; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Iris Sync - 2026_07_20; raw/meeting_transcripts/Iris Sync - 2026_07_22; raw/meeting_transcripts/Meeting started 2026_07_23; raw/meeting_transcripts/Iris Sync - 2026_07_24; raw/meeting_transcripts/Iris Sync - 2026_07_27 12_29 EDT - Notes by Gemini.md.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_10; raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_03; raw/meeting_transcripts/Iris Sync - 2026_07_06; raw/meeting_transcripts/Iris Sync - 2026_07_08; raw/meeting_transcripts/Iris Sync - 2026_07_10; raw/meeting_transcripts/Iris Sync - 2026_07_13; raw/meeting_transcripts/Iris Sync - 2026_07_15; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Iris Sync - 2026_07_20; raw/meeting_transcripts/Iris Sync - 2026_07_22; raw/meeting_transcripts/Meeting started 2026_07_23; raw/meeting_transcripts/Iris Sync - 2026_07_24; raw/meeting_transcripts/Iris Sync - 2026_07_27 12_29 EDT - Notes by Gemini.md.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md

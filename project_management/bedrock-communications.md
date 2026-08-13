@@ -2,11 +2,12 @@
 
 **Summary**: Customer-facing updates, reports sent, and key messages with Bedrock.
 
-**Last updated**: 2026-08-03
+**Last updated**: 2026-08-10
 
 ---
 
 Open
+- **2026-08-10** - **Milestone 2 Model Delivery & Jetson Verification**: Crescer targeting delivery of finalized Milestone 2 model to Bedrock and completion of Jetson onboard deployment testing within the current week (source: Iris Sync - 2026_08_10).
 - **2026-08-03** - **Southern California Mission Data Acquisition**: Bridget (Bedrock) shared a new dataset covering 2km x 2km (~300 XTF files, >1,000 picked contacts) off Southern California. The data currently lacks ground truth; Crescer will perform qualitative inference using the V4 model before deciding on manual labeling (source: Iris Sync - 2026_08_03).
 - **2026-08-03** - **Milestone 2 Closure Presentation Setup**: Sachin preparing 3-tier proof presentation (SOW 1 baseline vs retrained SOW 1 vs V4 model) for client review to close out Milestone 2 (source: Iris Sync - 2026_08_03).
 - ~~**2026-07-17** - **Connect Meeting on Metrics and Data**: Sync meeting with Bridget (Bedrock) to review progress. We established a dual-threshold (0.1/0.5 IOU) reporting strategy to demonstrate detection capabilities at varying strictness levels. Bedrock confirmed that only 10-11 unique UXO objects exist in the dataset and no more will be provided. The team agreed to document all data exclusion reasons, and discussed moving ambiguous small black artifacts to the black patch category (source: Bedrock connect - 2026_07_17).~~
@@ -21,9 +22,10 @@ Resolved
 - [[bedrock-sow-2]]
 - [[internal-bedrock-x-crescerai-initial-sow]]
 - [[model-performance-and-metrics]]
+- [[onboard-deployment]]
 - [[magnetometer-fusion]]
 - [[magnetometer-processing-pipeline]]
 
 ---
 
-**Sources**: raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Bedrock Discussion Cont - 2026_06_23; raw/meeting_transcripts/Bedrock__Crescer_ Mag Discussion - 2026_07_01; raw/meeting_transcripts/Bedrock connect - 2026_07_17
+**Sources**: raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Bedrock Discussion Cont - 2026_06_23; raw/meeting_transcripts/Bedrock__Crescer_ Mag Discussion - 2026_07_01; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md

@@ -2,7 +2,7 @@
 
 **Summary**: Catalog of datasets used in the Bedrock ATR project, their characteristics, annotation status, and curation decisions.
 
-**Last updated**: 2026-07-29
+**Last updated**: 2026-08-10
 
 ---
 
@@ -38,7 +38,7 @@ Pratyaksh identified an open-source dataset of approximately 300k images to serv
 
 ### UXO Versus Mine Classification Confusion
 
-Significant confusion exists between "mine" and "UXO" labels across the dataset. The one AOI mine example found by Pratyaksh was classified inconsistently across labeling iterations — previously put into the "other" category. Sachin marked it as mine because open-source data showed similar-looking objects as mines. Geoff notes that not all AOI small black objects are UXOs, and the distinction is important. Sachin plans to add a separate JSON file that toggles to show confirmed UXOs, since most UXO objects are in the ENTX and DRN datasets and typically appear as small black spots rather than elongated shapes (source: Iris Sync - 2026_07_17).
+Significant confusion exists between "mine" and "UXO" labels across the dataset. The one AOI mine example found by Pratyaksh was classified inconsistently across labeling iterations — previously put into the "other" category. Sachin marked it as mine because open-source data showed similar-looking objects as mines. Geoff notes that not all AOI small black objects are UXOs, and the distinction is important. Sachin plans to add a separate JSON file that toggles to show confirmed UXOs, since most UXO objects are in the ANTX and DRN datasets and typically appear as small black spots rather than elongated shapes (source: Iris Sync - 2026_07_17).
 
 ### UXO Naming Convention
 
@@ -133,13 +133,18 @@ To prevent boundary cutoffs and background region loss when separating port and 
 
 When selecting background datasets for compositing synthetic targets (source: Iris Sync - 2026_08_05):
 - **Recommended**: **VW** (Vineyard Winds) and **DRN** (Danish Royal Navy) are preferred due to clean background textures.
-- **Deprioritized**: **ENTX** (contains repeating BRB 006 artifacts), **ICS** (poor visual quality), and **POE** (excessive chain artifacts) produce noisy composite results.
+- **Deprioritized**: **ANTX** (contains repeating BRB 006 artifacts), **ICS** (poor visual quality), and **POE** (excessive chain artifacts) produce noisy composite results.
 
 ### Treasure Island Dataset & Artificial UXO Fix (August 7)
 
 - **Treasure Island Evaluation Dataset**: Client provided the new Treasure Island dataset. Established model performance validation on Treasure Island as a mandatory deliverable for Milestone 2 completion (source: Iris Sync - 2026_08_07).
 - **Artificial UXO Annotation Bug Correction**: Discovered that previous artificial copy-paste evaluation data had missing ground truth annotations when base images already contained pre-existing UXO targets. Corrected the ground truth labels to allow training a dedicated copy-paste model run (source: Iris Sync - 2026_08_07).
 - **Swedish Rockan Mine Reference**: Bridget shared documentation regarding a potential Swedish-made Rockan mine-like object (MLO) for target cataloging (source: Iris Sync - 2026_08_07).
+
+### Final Ground Truth Re-Labeling & Contact Mining (August 10)
+
+- **Unlabeled Contact Mining**: Visual audit of false positives from the high-recall V4 model revealed that many flagged detections are valid UXO contacts that were omitted by annotators or missed in `AOI small black` (labeling error rate estimated at ~1–5%).
+- **Final Cleaning Pass**: Approved one final, rapid re-labeling pass to add missing annotations before final training. Sachin confirmed manual mask capture across all files for confirmed UXOs, noting that remaining missing labels reside primarily in `AOI small black` (source: Iris Sync - 2026_08_10).
 
 ## Related pages
 
@@ -153,7 +158,8 @@ When selecting background datasets for compositing synthetic targets (source: Ir
 - [[iris-sync-2026-08-03]]
 - [[iris-sync-2026-08-05]]
 - [[iris-sync-2026-08-07]]
+- [[iris-sync-2026-08-10]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_07; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_10; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md

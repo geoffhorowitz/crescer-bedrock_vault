@@ -2,7 +2,7 @@
 
 **Summary**: Practical engineering implementation of sidescan sonar (SSS) data augmentation strategies, including cut-paste, Poisson blending, diffusion models, LLM validation loops, and handling of rare classes.
 
-**Last updated**: 2026-07-29
+**Last updated**: 2026-08-10
 
 ---
 
@@ -75,7 +75,7 @@ Small dark circular objects (AOI support) are difficult to capture due to limite
 
 UXO-style objects: there are only 10-11 unique UXO objects across the entire dataset. Bridget (Bedrock) confirmed that no more UXO data is likely available to share (source: Iris Sync - 2026_07_17).
 
-Mine objects: Pratyaksh found only one to two distinct mine examples in annotated data. Most UXO objects are concentrated in the ENTX and DRN datasets and typically appear as small black spots rather than elongated shapes (source: Iris Sync - 2026_07_17).
+Mine objects: Pratyaksh found only one to two distinct mine examples in annotated data. Most UXO objects are concentrated in the ANTX and DRN datasets and typically appear as small black spots rather than elongated shapes (source: Iris Sync - 2026_07_17).
 
 ### UK Royal Navy Demo Context
 
@@ -89,7 +89,7 @@ Ratul Shashank tested how changing virtual sensor parameters in XTF metadata aff
 - **Speed**: Produces visible changes (source: Iris Sync - 2026_07_17)
 - **Roll**: Does not visibly affect mosaic images because the XTF-to-image conversion does not use roll data. Roll affects waterfall views but not the final stitched mosaics used for training (source: Iris Sync - 2026_07_17)
 
-XTF sensor speed metadata shows zero for all ENTX and VW files, while DRN and POE files consistently show ~2 m/s. The reason for the zero values is unknown (source: Iris Sync - 2026_07_17).
+XTF sensor speed metadata shows zero for all ANTX and VW files, while DRN and POE files consistently show ~2 m/s. The reason for the zero values is unknown (source: Iris Sync - 2026_07_17).
 
 ## Open-Source Data Strategy
 
@@ -219,7 +219,7 @@ Pivoted target simulation strategy to fine-tuning a LoRA (Low-Rank Adaptation) m
 
 Pratyaksh completed training a background generation model using flow matching loss, enabling continuous ODE-based time-step sampling (source: Iris Sync - 2026_08_03).
 - **Classifier Guidance Weights**: Tested weights 1, 2, and 5. Unweighted/weight 1 produced realistic in-distribution backgrounds. Weight 2 began darkening textures, while weight 5 destroyed image structure across all datasets (source: Iris Sync - 2026_08_03).
-- **Diffusion Steps**: 10 diffusion evaluation steps were sufficient for well-represented datasets, but 25 steps significantly improved background quality on small datasets like ENTX (source: Iris Sync - 2026_08_03).
+- **Diffusion Steps**: 10 diffusion evaluation steps were sufficient for well-represented datasets, but 25 steps significantly improved background quality on small datasets like ANTX (source: Iris Sync - 2026_08_03).
 
 ## ResNet-50 Embedding DBSCAN Noise Filtering & 100k Sampling (August 3)
 
@@ -260,10 +260,22 @@ Empirical evaluation led to a major shift in target generation strategy (source:
 - **100k Synthetic Cluster Visualization App**: Pratyaksh generated ~100,000 synthetic targets, clustered them via embedding maps (UMAP/t-SNE), and built a side-by-side visualization app (JSON cluster map) allowing interactive comparison of real versus generated samples.
 - **Restoration of Cut-and-Paste Training Data**: Confirmed that omitting direct copy-paste augmentation in V4 caused a drop in model robustness. Identified that previous artificial evaluation issues were caused by un-annotated base image UXOs; resolved to train a dedicated model incorporating corrected cut-and-paste data for Milestone 2 completion.
 
+## Procedural Shape Parameterization & Evolutionary Optimization (August 10)
+
+Key procedural generation developments from the August 10 sync (source: Iris Sync - 2026_08_10):
+- **Radial Boundary Distance Parameterization**: Ratul developed a procedural shape generation method that analyzes real object masks to calculate the radial distance from the object center to its outer boundary as a function of elongation and height. This mathematical boundary formulation creates realistic, organic target outlines beyond rigid static geometries (ovals/triangles).
+- **Hyperparameter Boundaries & Blending**: The team discarded low 0.1 drop percentages (which caused rigid, non-varying circles/ovals) in favor of testing drop percentages across 0.3–0.9. The team standardized on a random uniform drop rate of 0.7–0.9 for background processing, while tuning blend mask multipliers and blur kernel sizes to seamlessly integrate procedural shapes into background textures.
+- **Derivative-Free Evolutionary Optimization (CMA-ES / CEM)**: To move away from slow manual parameter tuning, Hemanth proposed setting up automated, derivative-free optimization loops:
+  - *Algorithms*: Covariance Matrix Adaptation Evolution Strategy (**CMA-ES**) or Cross-Entropy Method (**CEM**) (utilizing non-gradient optimizers from `scipy.optimize`).
+  - *Loss Functions*: Structural loss functions and color/intensity-matching metrics to evaluate synthetic vs. real distribution fit.
+  - *Search Space*: Automatically combines primitives (shapes, blending masks, textures) and searches the hyperparameter space without requiring differentiable rendering.
+- **24-Hour Viability Target**: The team set a 24-hour deadline to confirm synthetic sample generation viability, with Pratyaksh running 1–2 model iterations by Wednesday.
+
 ## Related pages
 
 - [[automated-target-recognition]]
 - [[model-performance-and-metrics]]
+- [[model-training-and-iterations]]
 - [[data-sets-and-curation]]
 - [[magnetometer-fusion]]
 - [[synthetic-data-requirements]]
@@ -272,7 +284,8 @@ Empirical evaluation led to a major shift in target generation strategy (source:
 - [[iris-sync-2026-08-03]]
 - [[iris-sync-2026-08-05]]
 - [[iris-sync-2026-08-07]]
+- [[iris-sync-2026-08-10]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_07; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_10; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md

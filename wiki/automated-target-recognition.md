@@ -2,7 +2,7 @@
 
 **Summary**: Bedrock and Crescer AI's ATR work focuses on detecting discrete targets in sidescan sonar, then extending toward onboard AUV operation and magnetometer-aware detection. Dataset details are documented in [[data-sets-and-curation]] and training progress in [[model-training-and-iterations]].
 
-**Last updated**: 2026-07-28
+**Last updated**: 2026-08-10
 
 ---
 
@@ -18,7 +18,7 @@ As of July 28, the team shifted strategy: instead of modifying existing Bedrock 
 
 ## Datasets In Use
 
-The team works with five datasets: VW (Vineyard Winds) as the baseline, ENTX with labeled features, DRN (Danish Royal Navy) with small non-ferromagnetic targets, POE (Port of Espoo), and a port background dataset. An open-source base dataset of ~300k images is also being evaluated as a synthetic generation base. See [[data-sets-and-curation]] for details (source: multiple Iris Sync transcripts, source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
+The team works with five primary datasets: VW (Vineyard Winds) as the baseline, ANTX (commonly mislabeled as ENTX in transcripts) with labeled features, DRN (Danish Royal Navy) with small non-ferromagnetic targets, POE (Port of Espoo), and a port background dataset. Additional evaluation datasets include open-source sonar corpora (~300k images), Southern California mission data, and the Treasure Island dataset. See [[data-sets-and-curation]] for details (source: multiple Iris Sync transcripts, source: Bedrock Discussion Continued (understanding eval agent) - 2026_07_28).
 
 ## Outputs
 
@@ -43,4 +43,4 @@ The initial SOW lists model output format as an unresolved decision point, inclu
 
 ---
 
-**Sources**: raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_07_15; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md
+**Sources**: raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_10; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md

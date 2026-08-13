@@ -2,10 +2,12 @@
 
 **Summary**: Lessons learned, pitfalls, and insights from execution on the Bedrock ATR project.
 
-**Last updated**: 2026-08-07
+**Last updated**: 2026-08-10
 
 ---
 
+- **2026-08-10** - **High-Recall Model as Ground Truth Mining Tool**: Flagged false positives from a high-recall detector frequently represent genuine targets omitted by human annotators (ground truth error rate ~1–5%). Leveraging high-recall model predictions to guide targeted re-labeling cleans ground truth efficiently, directly raising measured precision without altering model architectures (source: Iris Sync - 2026_08_10).
+- **2026-08-10** - **Derivative-Free Evolutionary Optimization for Procedural Sonar Synthesis**: Manual parameter tuning for procedural object shapes and blending masks is slow and subjective. Derivative-free evolutionary strategies (CMA-ES, CEM) combined with structural and color loss functions effectively automate parameter searches across non-differentiable procedural pipelines (source: Iris Sync - 2026_08_10).
 - **2026-08-07** - **Diffusion Blob Limitations for Target Synthesis**: Diffusion models fail to capture discrete structural morphology for small sonar targets, outputting unstructured "blobs." Programmatic VLM/LLM procedural code generation using basic geometric primitives (circles, ovals, teardrops, cylinders) with vertex jittering produces superior structural realism for synthetic UXO objects (source: Iris Sync - 2026_08_07).
 - **2026-08-07** - **Artificial Evaluation Annotation Omissions**: Discovered that poor baseline performance on artificial copy-paste test sets was caused by un-annotated pre-existing UXOs in base images rather than model failure. Fixing missing base-image annotations is critical before evaluating copy-paste robustness (source: Iris Sync - 2026_08_07).
 - **2026-08-05** - **Geographic Map Grid vs. Raster Patch Inference Scope**: Transitioning K-fold cross-validation spatial dataset partitioning to a 100m x 100m map grid prevents boundary cutoffs and background region loss when separating port/starboard channels. Crucially, this geographic grid applies specifically to spatial partitioning boundaries, whereas standard model inference continues to operate on 128x128 raster patches (source: Iris Sync - 2026_08_05).
@@ -38,7 +40,8 @@
 - [[sss-augmentation-methods]]
 - [[data-quality-and-gaps]]
 - [[model-training-and-iterations]]
+- [[model-performance-and-metrics]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_24 through 2026_07_17; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_24 through 2026_08_10; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17

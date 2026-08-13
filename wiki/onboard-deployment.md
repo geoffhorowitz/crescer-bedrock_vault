@@ -2,7 +2,7 @@
 
 **Summary**: Onboard deployment covers packaging, runtime, input format, and AUV integration support for running Bedrock ATR models on embedded hardware.
 
-**Last updated**: 2026-07-15
+**Last updated**: 2026-08-10
 
 ---
 
@@ -11,6 +11,10 @@
 The initial SOW requires a Docker image with a sample model capable of running on Jetson TX2 using TensorRT 8, a minimal runtime environment, and command-line inference (source: Internal Bedrock x CrescerAI Initial SOW.md).
 
 The milestone deck reports Jetson Nano benchmark results and states that TX2 performance is expected to be better (source: SOW 1 Milestone 2 Presentation.pptx).
+
+## Jetson Testing & Model Delivery Status (August 10)
+
+As the project transitions to shipping mode for Milestone 2 closure, Geoff Horowitz is spearheading final Jetson testing with Sachin Pandey's support, aiming to finalize model delivery to Bedrock and complete embedded Jetson testing within the week (source: Iris Sync - 2026_08_10).
 
 ## Integration Support
 
@@ -28,12 +32,14 @@ Bedrock retains ownership of the real-time preprocessing pipeline, and Crescer A
 
 - [[automated-target-recognition]]
 - [[model-performance-and-metrics]]
+- [[model-training-and-iterations]]
 - [[data-rights-and-ip]]
 - [[internal-bedrock-x-crescerai-initial-sow]]
 - [[sow-1-milestone-2-presentation]]
 - [[bedrock-sow-2]]
 - [[mollusk-platform]]
+- [[iris-sync-2026-08-10]]
 
 ---
 
-**Sources**: raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md
+**Sources**: raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md

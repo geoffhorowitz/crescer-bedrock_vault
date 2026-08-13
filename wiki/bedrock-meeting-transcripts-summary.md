@@ -1,15 +1,15 @@
 # Bedrock Meeting Transcripts Summary
 
-**Summary**: Consolidated summary of 31 internal and Bedrock meeting transcripts from June 12 through August 7, 2026, covering model training progress, data pipeline decisions, magnetometer processing, milestone planning, hyperparameter benchmarking, data cleaning impacts, K-fold validation, UXO/AOI class merging, Flux Turbo LoRA synthetic generation, V4 false-positive penalty weighting, LLM validation agent loops, July 28 strategy shift, July 31 latent diffusion/pixel crops, August 3 Milestone 2 closure & geographic K-fold splits, August 5 100m geo-grid K-fold partitioning, and August 7 VLM procedural generation & 4-bucket reporting framework.
+**Summary**: Consolidated summary of 32 internal and Bedrock meeting transcripts from June 12 through August 10, 2026, covering model training progress, data pipeline decisions, magnetometer processing, milestone planning, hyperparameter benchmarking, data cleaning impacts, K-fold validation, UXO/AOI class merging, Flux Turbo LoRA synthetic generation, V4 false-positive penalty weighting, LLM validation agent loops, July 28 strategy shift, July 31 latent diffusion/pixel crops, August 3 Milestone 2 closure & geographic K-fold splits, August 5 100m geo-grid K-fold partitioning, August 7 VLM procedural generation & 4-bucket reporting framework, and August 10 model selection validation, false positive data mining, and evolutionary optimization.
 
-**Last updated**: 2026-08-07
+**Last updated**: 2026-08-10
 
 ---
 
 ## Timeframe and Sources
 
-This page synthesizes 31 meeting transcripts spanning from June 12, 2026 through August 7, 2026:
-- 24 weekly Iris Sync meetings (internal Crescer standups through August 7, 2026)
+This page synthesizes 32 meeting transcripts spanning from June 12, 2026 through August 10, 2026:
+- 25 weekly Iris Sync meetings (internal Crescer standups through August 10, 2026)
 - 1 Bedrock discussion continuation (June 23, 2026)
 - 1 Bedrock magnetometer discussion with Francisco Bolivar (July 1, 2026)
 - 1 Bedrock connect meeting (July 17, 2026)
@@ -45,7 +45,7 @@ The team moved from a three-way train/validation/test split to an 80/20 or 90/10
 
 Multiple datasets were actively used and discussed:
 - **VW (Vineyard Winds)**: The original dataset, used for baseline comparison and legacy model evaluation
-- **ENTX**: New dataset with labeled features for training
+- **ANTX**: New dataset with labeled features for training (often mislabeled as ENTX in transcripts)
 - **DRN (Danish Royal Navy)**: Noted as having no objects/annotations in certain regions; non-highly-ferromagnetic, small objects that did not meet detection thresholds
 - **POE (Port of Espoo)**: Used as background dataset for training and testing false positives on varied backgrounds
 - **Port dataset**: Additional background dataset lacking annotations, used as test set for false positive monitoring
@@ -95,7 +95,7 @@ Completed work as of July 17:
 - Roll-like artificial data: done
 - Cross-dataset transformation (one dataset style to another): no success yet
 
-Virtual sensor parameter experiments (Ratul Shashank): altitude and speed changes produce visible image differences; roll changes do not visibly affect mosaics because the XTF-to-image conversion does not use roll data. XTF files in ENTX and VW show sensor speed of zero, while DRN and POE consistently show ~2 m/s (source: Iris Sync - 2026_07_17).
+Virtual sensor parameter experiments (Ratul Shashank): altitude and speed changes produce visible image differences; roll changes do not visibly affect mosaics because the XTF-to-image conversion does not use roll data. XTF files in ANTX and VW show sensor speed of zero, while DRN and POE consistently show ~2 m/s (source: Iris Sync - 2026_07_17).
 
 ### Open-Source Data Strategy Shift
 
@@ -399,6 +399,23 @@ Established a 4-bucket reporting framework (UXO-like, non-UXO-like, background, 
 ### Milestone 2 Completion & Milestone 3 Scope
 Finalized Milestone 2 deliverables: (1) 5-fold cross-validation metrics, (2) cut-and-paste augmented model training, and (3) Treasure Island dataset evaluation. Resuming MAG data correlation for Milestone 3 next week. Cataloged Swedish Rockan mine-like object (MLO) documentation (source: Iris Sync - 2026_08_07).
 
+## August 10 Updates
+
+### Model Validation Benchmarks & Leading Candidate Designation
+Evaluated cross-validation metrics across ~20 models/folds. Version 4 with image augmentation achieved the highest recall across folds. The team designated V4 AUG + Cut-and-Paste as the leading contender for the final Milestone 2 model, with final cross-validation testing underway to validate its performance before formal selection. Clarified model lineage: V3 contains copy-paste augmentation, V4 utilizes image augmentation filters without copy-paste, and the new testing stack combines both (source: Iris Sync - 2026_08_10).
+
+### False Positive Analysis & Ground Truth Mining
+Visual review of false positives from the high-recall V4 model revealed that many flagged detections visually resemble genuine UXOs that were missed by annotators or omitted from `AOI small black`. With ground truth labeling error estimated at ~1–5%, the team resolved to execute one final, rapid re-labeling and cleaning pass to correct missing annotations and improve precision (source: Iris Sync - 2026_08_10).
+
+### Post-Processing & Four-Table Reporting Framework
+Agreed that precision deficits in high-recall models will be addressed via post-processing filters (size thresholding, confidence filtering). Sachin tasked with sharing four performance tables on Slack (2 unprocessed vs. 2 post-processed tables across folds) to confirm precision improvements without recall loss (source: Iris Sync - 2026_08_10).
+
+### Procedural Shape Generation & Evolutionary Optimization Loop
+Ratul refined synthetic shape generation using a radial boundary distance function (measuring distance from mask center to edge as a function of elongation/height) to create natural contours. Established background drop rates of 0.7–0.9 and blend mask multipliers. Hemanth proposed replacing manual parameter tuning with derivative-free evolutionary strategies (CMA-ES, CEM from `scipy.optimize`) using structural and color-based loss functions to automate parameter search. Set a 24-hour deadline for validating synthetic pipeline viability (source: Iris Sync - 2026_08_10).
+
+### Transition to Shipping Mode & Hardware Testing
+Hemanth advised shifting from research mode to shipping mode to package Milestone 2 deliverables. Geoff announced goals to finalize model delivery to Bedrock and complete Jetson onboard deployment testing within the week (source: Iris Sync - 2026_08_10).
+
 ## Related pages
 
 - [[magnetometer-processing-pipeline]]
@@ -407,12 +424,14 @@ Finalized Milestone 2 deliverables: (1) 5-fold cross-validation metrics, (2) cut
 - [[model-training-and-iterations]]
 - [[data-quality-and-gaps]]
 - [[data-sets-and-curation]]
+- [[onboard-deployment]]
 - [[iris-sync-2026-07-29]]
 - [[iris-sync-2026-07-31]]
 - [[iris-sync-2026-08-03]]
 - [[iris-sync-2026-08-05]]
 - [[iris-sync-2026-08-07]]
+- [[iris-sync-2026-08-10]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_07 (all 25 transcripts); raw/meeting_transcripts/Bedrock Discussion Cont - 2026_06_23; raw/meeting_transcripts/Bedrock__Crescer_ Mag Discussion - 2026_07_01; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Meeting started 2026_07_23 15_29 EDT - Notes by Gemini.md; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_10 (all 26 Iris Sync transcripts); raw/meeting_transcripts/Bedrock Discussion Cont - 2026_06_23; raw/meeting_transcripts/Bedrock__Crescer_ Mag Discussion - 2026_07_01; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Meeting started 2026_07_23 15_29 EDT - Notes by Gemini.md; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md

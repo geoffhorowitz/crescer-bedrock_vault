@@ -2,12 +2,19 @@
 
 **Summary**: Active and resolved action items, blockers, and follow-ups for the Bedrock ATR project.
 
-**Last updated**: 2026-08-07
+**Last updated**: 2026-08-10
 
 ---
 
 ## Active items
 
+- **2026-08-10** - **Share 4 Performance Tables on Slack**: Sachin to share four performance tables (2 unprocessed raw prediction tables across folds/models vs. 2 post-processed tables with size/confidence filters) on the project Slack (source: Iris Sync - 2026_08_10). [Status: Open]
+- **2026-08-10** - **Validate V4 AUG + Cut-and-Paste via Cross-Validation**: Sachin to train and validate the V4 AUG + Cut-and-Paste candidate across folds to verify Milestone 2 performance (source: Iris Sync - 2026_08_10). [Status: In-Progress]
+- **2026-08-10** - **Final Ground Truth Re-Labeling**: Sachin and Pratyaksh to execute a final, rapid re-labeling and cleaning pass for un-annotated UXO / AOI small black contacts (source: Iris Sync - 2026_08_10). [Status: Open]
+- **2026-08-10** - **Jetson Hardware Testing & M2 Delivery**: Geoff to spearhead Jetson deployment testing with Sachin's support to prepare Milestone 2 models for Bedrock delivery this week (source: Iris Sync - 2026_08_10). [Status: In-Progress]
+- **2026-08-10** - **Evolutionary Optimization Loop Implementation**: Pratyaksh to set up derivative-free optimization loop (CMA-ES/CEM) with structural/color losses for synthetic data parameters (source: Iris Sync - 2026_08_10). [Status: Open]
+- **2026-08-10** - **Shape Parameter Delivery**: Ratul to finalize and share tuned shape parameters within 24 hours (source: Iris Sync - 2026_08_10). [Status: Open]
+- **2026-08-10** - **Synthetic Model Iteration Runs**: Pratyaksh to run 1–2 model iterations with synthetic data by Wednesday (source: Iris Sync - 2026_08_10). [Status: Open]
 - **2026-08-07** - **Model Performance Comparison Table**: Sachin to analyze and document fine-tuned performance comparing baseline vs V4 versions (source: Iris Sync - 2026_08_07). [Status: Open]
 - **2026-08-07** - **Sand Ripple Integration Review**: Pratyaksh to review Hemanth's sand ripple artifacts by Monday for potential integration (source: Iris Sync - 2026_08_07). [Status: Open]
 - **2026-08-07** - **Real vs Generated Visualization App**: Pratyaksh to build side-by-side app comparing real vs generated synthetic samples (source: Iris Sync - 2026_08_07). [Status: Open]
@@ -52,6 +59,8 @@
 
 ## Resolved items
  
+- **2026-08-07** - **Cross-Validation Metrics Completion**: Sachin to complete cross-validation metrics and share results (source: Iris Sync - 2026_08_07). [Status: Resolved on 2026-08-10: completed across ~20 models/folds with V4 showing highest recall.]
+- **2026-08-03** - **5-Fold Geographic K-Fold Reruns**: Pratyaksh and Sachin to rerun V3, V4, and V3 + Tversky loss across the 5 spatial K-folds once Ratul finishes ground truth fixes (source: Iris Sync - 2026_08_03). [Status: Resolved on 2026-08-10: completed across ~20 models/folds.]
 - **2026-07-15** - **VW File Count Discrepancy**: Investigate the missing ~118 processed files in the Vineyard Winds dataset (345 files found vs. 463 expected), likely due to an incomplete unzip process (source: Iris Sync - 2026_07_15). [Status: Resolved - issue with VW phase 2 upload on FTP.]
 - **2026-07-08** - **Multi-Class vs. Binary Output Confirmation**: Clarify with Bedrock on Slack if they require multi-class or single-class binary outputs from the model (source: Iris Sync - 2026_07_08). [Status: Resolved in meeting with Bridgit: Multi-class preferred, but binary UXO is sufficient as MVP if needed]
 - **2026-07-17** - **S7K Depth Coordinate Direction**: Clarify the Z-axis orientation in S7K/MBES data (source: Aux Discussion Mag Data - 2026_07_17). [Status: Resolved on 2026-07-17: confirmed Z-axis is positive downward, resolving depth inconsistencies.]
@@ -69,4 +78,4 @@
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_24 through 2026_07_31; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_24 through 2026_08_10; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28

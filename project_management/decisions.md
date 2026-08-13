@@ -2,10 +2,14 @@
 
 **Summary**: Significant decisions made by the team or client, with rationale and date.
 
-**Last updated**: 2026-08-07
+**Last updated**: 2026-08-10
 
 ---
 
+- **2026-08-10** - **V4 AUG + Cut-and-Paste Leading Candidate Designation**: Designated V4 with image augmentations and cut-and-paste foreground targets as the leading candidate model configuration for Milestone 2, with final cross-validation testing underway to validate performance prior to final selection (source: Iris Sync - 2026_08_10).
+- **2026-08-10** - **Final Ground Truth Re-Labeling & Cleaning Pass**: Approved one final, rapid re-labeling and cleaning pass to correct ~1–5% missing UXO / AOI small black annotations identified during false positive error analysis (source: Iris Sync - 2026_08_10).
+- **2026-08-10** - **Evolutionary Optimization for Synthetic Parameters**: Adopted derivative-free evolutionary strategies (CMA-ES, CEM) combined with structural and color-based loss functions to automate procedural shape and blending parameter tuning, moving away from manual trial-and-error (source: Iris Sync - 2026_08_10).
+- **2026-08-10** - **Transition to Shipping Mode**: Formally shifted team priority from research mode to shipping mode to package Milestone 2 deliverables, finalize Jetson onboard deployment testing, and deliver models to Bedrock within the week (source: Iris Sync - 2026_08_10).
 - **2026-08-07** - **Diffusion Abandonment & VLM Procedural Generation Pivot**: Shelved diffusion models for UXO target generation due to unstructured "blob" outputs. Pivoted to VLM/LLM code-based procedural generation across four shape categories (circles, ovals, teardrops, cylinders/cones) with vertex jittering and intensity darkening (source: Iris Sync - 2026_08_07).
 - **2026-08-07** - **Zero-F1 Early Stopping Criteria**: Mandated terminating K-fold training runs early if F1 score reaches 0 to conserve GPU compute and avoid training failed configs (source: Iris Sync - 2026_08_07).
 - **2026-08-07** - **Four-Bucket Confusion Matrix Framework**: Adopted a 4-bucket reporting strategy (UXO-like, non-UXO-like, background, and True UXO breakdown) to communicate high recall performance on true UXOs while managing precision expectations with stakeholders (source: Iris Sync - 2026_08_07).
@@ -52,7 +56,8 @@
 - [[magnetometer-fusion]]
 - [[sss-augmentation-methods]]
 - [[data-quality-and-gaps]]
+- [[onboard-deployment]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_07_31; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_10; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28
