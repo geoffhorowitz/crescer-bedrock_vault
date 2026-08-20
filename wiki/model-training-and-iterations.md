@@ -1,8 +1,8 @@
 # Model Training And Iterations
 
-**Summary**: Progress on model training across multiple iterations, including architecture comparisons, class strategy decisions, test set selection, hyperparameter searches, augmentation combinations, V3/V4 model performance, and model lineage documentation.
+**Summary**: Progress on model training across multiple iterations, including architecture comparisons, class strategy decisions, test set selection, hyperparameter searches, augmentation combinations, V3/V4 model performance, K-fold data leakage resolution, and model lineage documentation.
 
-**Last updated**: 2026-08-10
+**Last updated**: 2026-08-14
 
 ---
 
@@ -185,12 +185,35 @@ The team evaluated 5-fold cross-validation results across ~20 trained models to 
   - **V4 AUG + Cut-and-Paste**: Combines V4 image augmentation filters with cut-and-paste foreground targets.
 - **Final Data Re-Labeling & Cleaning Pass**: Following false positive analysis that surfaced ~1–5% unlabeled real UXO targets in base ground truth, the team approved one final, rapid re-labeling and cleaning pass to correct missing annotations and improve precision before final training.
 
+## August 12 K-Fold Data Leakage Resolution & V4 Benchmark Results
+
+Training updates and pipeline diagnostics from the August 12 sync (source: Iris Sync - 2026_08_12):
+- **K-Fold Crop-Level Data Leakage**: Investigation into cross-validation false positives confirmed data leakage at the image crop level during K-fold partitioning. Specific image crops were repeated across folds such that an image was annotated in one fold but unannotated in another, contaminating train/validation separation (~14% duplication rate estimated). Sachin committed to resolving the crop partitioning logic within 24 hours, followed by retraining the top two model configs per fold.
+- **Resolution of Augmentation Pipeline Bug (`dual_transform`)**: Pratyaksh identified a silent bug in `augmentation.py` where passing `always_apply` in the `dual_transform` subclass constructor improperly overrode the `p` (probability) parameter. When testing standalone with `always_apply=True`, `p` was set to 1.0; however, during training pipelines with `p < 1.0`, custom augmentations—including **Poisson copy-paste**—were completely bypassed. This finding accounted for earlier anomalous results where perspective transforms appeared superior to copy-paste.
+- **V4 AUG + Copy-and-Paste Benchmark Performance (80/20 Split)**: Sachin evaluated V4 AUG with copy-and-paste and heavy augmentations on the original verified single 80/20 train/validation split with updated ground truth (~80 mined UX annotations added to `AOI small black`). The configuration achieved an **F1 score of 92% (Precision ~94%, high recall)** on the combined UXO + AOI small black metaclass (and 74% F1 on pure UXO). Full visual verification and an HTML confusion matrix summary report are in progress.
+- **Standardized Tile Split Dimensions**: Standardized image and mask patch splits to 128, 256, and 512 pixels for XTF preparation and training.
+
+## August 14 K-Fold Throughput Optimization & 3-Channel Pre-Training
+
+Training pipeline optimizations and infrastructure scaling from the August 14 sync (source: Iris Sync - 2026_08_14):
+- **K-Fold Throughput Bottleneck Resolution**: Initial training runs for K-fold Fold 1 took 17+ hours on single GPUs due to `repeat_factor` being set to 50 on small pre-sliced tiles and early stopping relaxed to 60–76 epochs. The team adjusted pipeline parameters:
+  - Reduced dataloader `repeat_factor` from 50 to **1** (or 2 max).
+  - Set total training epochs to **200**, with an early evaluation window at the first 10–30 epochs to select top-performing models.
+  - Reduced OpenCV/NumPy multiprocessing worker count from 8 to 4 and set thread management variables to prevent CPU core contention and swap memory thrashing.
+  - Reduced expected runtime to **3–4 hours per fold**.
+- **Hardware Allocation & Blackwell MIG Parallelization**:
+  - Moved **V1** baseline training to the **Ninja** machine.
+  - Assigned heavy **V4** variants (Base V4, V4 heavy augmentation, V4 AUG + Poisson copy-paste) to **Volley** and **Blackwell** GPUs.
+  - Configured the Blackwell platform with Multi-Instance GPU (MIG) instances to train all 5 folds in parallel for each candidate model, aiming for full cross-validation results within 24–48 hours.
+- **3-Channel Pre-Trained Architecture**: Transitioned models from single-channel grayscale input to a 3-channel setup (copying grayscale across RGB channels) initialized with pre-trained ImageNet weights. Applied a differential learning rate with the encoder learning rate set to 0.1× of the decoder learning rate to maintain feature extractor representations.
+
 ## Related pages
 
 - [[synthetic-data-requirements]]
 - [[sss-augmentation-methods]]
 - [[model-performance-and-metrics]]
 - [[data-sets-and-curation]]
+- [[data-quality-and-gaps]]
 - [[bedrock-meeting-transcripts-summary]]
 - [[onboard-deployment]]
 - [[iris-sync-2026-07-29]]
@@ -199,10 +222,12 @@ The team evaluated 5-fold cross-validation results across ~20 trained models to 
 - [[iris-sync-2026-08-05]]
 - [[iris-sync-2026-08-07]]
 - [[iris-sync-2026-08-10]]
+- [[iris-sync-2026-08-12]]
+- [[iris-sync-2026-08-14]]
 - [[internal-bedrock-x-crescerai-initial-sow]]
 - [[sow-1-milestone-2-presentation]]
 - [[lumen-model]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_10; raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_03; raw/meeting_transcripts/Iris Sync - 2026_07_06; raw/meeting_transcripts/Iris Sync - 2026_07_08; raw/meeting_transcripts/Iris Sync - 2026_07_10; raw/meeting_transcripts/Iris Sync - 2026_07_13; raw/meeting_transcripts/Iris Sync - 2026_07_15; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Iris Sync - 2026_07_20; raw/meeting_transcripts/Iris Sync - 2026_07_22; raw/meeting_transcripts/Meeting started 2026_07_23; raw/meeting_transcripts/Iris Sync - 2026_07_24; raw/meeting_transcripts/Iris Sync - 2026_07_27 12_29 EDT - Notes by Gemini.md.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_14; raw/Internal Bedrock x CrescerAI Initial SOW.md; raw/SOW 1 Milestone 2 Presentation.pptx; raw/Bedrock SOW 2.md; raw/meeting_transcripts/Iris Sync - 2026_07_03; raw/meeting_transcripts/Iris Sync - 2026_07_06; raw/meeting_transcripts/Iris Sync - 2026_07_08; raw/meeting_transcripts/Iris Sync - 2026_07_10; raw/meeting_transcripts/Iris Sync - 2026_07_13; raw/meeting_transcripts/Iris Sync - 2026_07_15; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Iris Sync - 2026_07_20; raw/meeting_transcripts/Iris Sync - 2026_07_22; raw/meeting_transcripts/Meeting started 2026_07_23; raw/meeting_transcripts/Iris Sync - 2026_07_24; raw/meeting_transcripts/Iris Sync - 2026_07_27 12_29 EDT - Notes by Gemini.md.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_12 12_27 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_14 12_30 EDT - Notes by Gemini.md

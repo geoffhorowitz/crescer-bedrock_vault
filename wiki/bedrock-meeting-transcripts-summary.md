@@ -1,15 +1,15 @@
 # Bedrock Meeting Transcripts Summary
 
-**Summary**: Consolidated summary of 32 internal and Bedrock meeting transcripts from June 12 through August 10, 2026, covering model training progress, data pipeline decisions, magnetometer processing, milestone planning, hyperparameter benchmarking, data cleaning impacts, K-fold validation, UXO/AOI class merging, Flux Turbo LoRA synthetic generation, V4 false-positive penalty weighting, LLM validation agent loops, July 28 strategy shift, July 31 latent diffusion/pixel crops, August 3 Milestone 2 closure & geographic K-fold splits, August 5 100m geo-grid K-fold partitioning, August 7 VLM procedural generation & 4-bucket reporting framework, and August 10 model selection validation, false positive data mining, and evolutionary optimization.
+**Summary**: Consolidated summary of 34 internal and Bedrock meeting transcripts from June 12 through August 14, 2026, covering model training progress, data pipeline decisions, magnetometer processing, milestone planning, hyperparameter benchmarking, data cleaning impacts, K-fold validation, UXO/AOI class merging, Flux Turbo LoRA synthetic generation, V4 false-positive penalty weighting, LLM validation agent loops, July 28 strategy shift, July 31 latent diffusion/pixel crops, August 3 Milestone 2 closure & geographic K-fold splits, August 5 100m geo-grid K-fold partitioning, August 7 VLM procedural generation & 4-bucket reporting framework, August 10 model selection validation & evolutionary optimization, August 12 K-fold data leakage diagnosis & augmentation bug fix, and August 14 K-fold throughput optimization (repeat factor 1, Blackwell MIG parallelization), 3-channel pre-trained Poisson/procedural experiments, metric reporting clarification, and Treasure Island rocky terrain domain shift.
 
-**Last updated**: 2026-08-10
+**Last updated**: 2026-08-14
 
 ---
 
 ## Timeframe and Sources
 
-This page synthesizes 32 meeting transcripts spanning from June 12, 2026 through August 10, 2026:
-- 25 weekly Iris Sync meetings (internal Crescer standups through August 10, 2026)
+This page synthesizes 34 meeting transcripts spanning from June 12, 2026 through August 14, 2026:
+- 27 weekly Iris Sync meetings (internal Crescer standups through August 14, 2026)
 - 1 Bedrock discussion continuation (June 23, 2026)
 - 1 Bedrock magnetometer discussion with Francisco Bolivar (July 1, 2026)
 - 1 Bedrock connect meeting (July 17, 2026)
@@ -416,12 +416,47 @@ Ratul refined synthetic shape generation using a radial boundary distance functi
 ### Transition to Shipping Mode & Hardware Testing
 Hemanth advised shifting from research mode to shipping mode to package Milestone 2 deliverables. Geoff announced goals to finalize model delivery to Bedrock and complete Jetson onboard deployment testing within the week (source: Iris Sync - 2026_08_10).
 
+## August 12 Updates
+
+### K-Fold Data Leakage Root Cause & Remediation Plan
+Identified that K-fold cross-validation data leakage occurred at the image crop level due to repeated files across folds where one instance retained annotations and another lacked them. Sachin committed to a 24-hour fix of the partitioning pipeline, followed by retraining the top two model configs per fold and generating updated confusion matrices within 48 hours (source: Iris Sync - 2026_08_12).
+
+### Discovery of Silent Augmentation Pipeline Bug (`dual_transform` / `always_apply`)
+Discovered a silent bug in `augmentation.py` where passing `always_apply` in the `dual_transform` subclass constructor improperly overrode the `p` (probability) parameter. When tested individually (`always_apply=True`), `p` defaulted to 1.0, but in training runs with `p < 1.0`, custom augmentations (including Poisson copy-paste) were completely ignored. This finding resolved earlier confusion over why perspective transforms appeared to outperform Poisson copy-paste (source: Iris Sync - 2026_08_12).
+
+### V4 Model Performance Benchmarks on Verified 80/20 Split
+Sachin trained and evaluated Version 4 with image augmentations and copy-and-paste on the clean, verified single 80/20 split with remediated ground truth (~80 UXO-like detections added to `AOI small black`). The model achieved an **F1 score of 92% (Precision ~94%, high recall)** on the merged UXO/AOI small black metaclass, and 74% F1 on pure UXO. Visual verification and an HTML confusion matrix summary report were assigned for completion within 24 hours (source: Iris Sync - 2026_08_12).
+
+### Procedural Synthetic Generation & 3D Artifacts
+Pratyaksh reported that training solely on procedurally generated synthetic labels achieved 50%–60% recall on UXO classes without real samples. Ratul investigated a 2-pixel shadow offset causing 3D synthetic objects to appear "floating", exploring alpha blending and Fourier series outline representations. Pratyaksh updated color transforms to mask water lines and black padding to avoid border distortion (source: Iris Sync - 2026_08_12).
+
+### Milestone 2 Scope, Hardware Deployment Architecture & Client Game
+Geoff reaffirmed Milestone 2 criteria (demonstrating performance improvements over prior deliverables) with an end-of-August deadline. Deployment architecture was established: inference pipeline on Jetson, Streamlit app hosted locally/on Wally. Hemanth proposed an interactive Real vs. Synthetic image classification game for Bedrock stakeholders (source: Iris Sync - 2026_08_12).
+
+## August 14 Updates
+
+### K-Fold Training Throughput Optimization & Compute Infrastructure
+Diagnosed extended 17+ hour training runs on K-fold Fold 1: dataloader `repeat_factor` was set to 50 on small pre-sliced tiles, and early stopping was relaxed to 60–76 epochs. The team reduced `repeat_factor` to 1, set total training epochs to 200 (with an early eval window at 10–30 epochs), and limited multiprocessing worker counts to 4 to eliminate CPU contention. Reallocated compute: moved V1 to Ninja, heavy V4 models to Volley, and utilized Blackwell with Multi-Instance GPU (MIG) support to run all 5 folds in parallel, targeting completion ahead of the Monday sync (source: Iris Sync - 2026_08_14).
+
+### 3-Channel Pre-Training & Poisson + Procedural Mine Synergy
+Transitioned models from single-channel grayscale to 3-channel input with pre-trained ImageNet weights and a 0.1× encoder learning rate. Combining Poisson copy-paste with procedural mine augmentation achieved the highest recall on UXO classes (missing only 1–2 targets during validation; raw object F1 ~67% due to aggressive predictions that will be filtered via post-processing). Ratul introduced data-driven object mask modulation (using 1.5 SD pixel thresholds) to independently elongate and bulge highlights and shadows along specific axes to simulate varying sonar illumination (source: Iris Sync - 2026_08_14).
+
+### Metric Reporting Clarification & 4-Bucket Deliverables
+Sachin clarified that a previously reported 90%+ F1 score on the 80/20 split was inflated due to an evaluation script bug that merged `AOI big` and `black patch` into a single class. Realigned on 4-bucket confusion matrices (raw counts and percentages: UXO-like [UXO + AOI small black], Non-UXO-like [AOI Big, etc.], and Background) as the primary customer deliverable. Evaluated test-time augmentations/multi-model inference as an optional "test-time scaling" feature for Bedrock (source: Iris Sync - 2026_08_14).
+
+### Treasure Island Dataset Evaluation & Domain Shift
+Evaluated base V4 (M3 model) on the Treasure Island dataset. The model successfully detects visible UXO contacts across overlapping passes (matching Bedrock's 347 multi-pass verified annotations derived from 61 physical contacts), but generates false positives on rocky terrain due to feature overlap between natural rock formations (shadows, curves, bumps) and UXO morphologies. Recommended incorporating rocky background tiles from Treasure Island into future training data and fusing magnetometer data to disambiguate non-magnetic rock outcrops (source: Iris Sync - 2026_08_14).
+
+### Onboard Jetson Deployment Environment
+Geoff completed the Jetson embedded system setup for Sachin with username `cresser` (matching Bedrock system path conventions) for weekend container validation ahead of the end-of-August Milestone 2 hard stop (source: Iris Sync - 2026_08_14).
+
 ## Related pages
 
 - [[magnetometer-processing-pipeline]]
 - [[synthetic-data-requirements]]
 - [[sss-augmentation-methods]]
 - [[model-training-and-iterations]]
+- [[model-performance-and-metrics]]
 - [[data-quality-and-gaps]]
 - [[data-sets-and-curation]]
 - [[onboard-deployment]]
@@ -431,7 +466,9 @@ Hemanth advised shifting from research mode to shipping mode to package Mileston
 - [[iris-sync-2026-08-05]]
 - [[iris-sync-2026-08-07]]
 - [[iris-sync-2026-08-10]]
+- [[iris-sync-2026-08-12]]
+- [[iris-sync-2026-08-14]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_10 (all 26 Iris Sync transcripts); raw/meeting_transcripts/Bedrock Discussion Cont - 2026_06_23; raw/meeting_transcripts/Bedrock__Crescer_ Mag Discussion - 2026_07_01; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Meeting started 2026_07_23 15_29 EDT - Notes by Gemini.md; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_14 (all 28 Iris Sync transcripts); raw/meeting_transcripts/Bedrock Discussion Cont - 2026_06_23; raw/meeting_transcripts/Bedrock__Crescer_ Mag Discussion - 2026_07_01; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Meeting started 2026_07_23 15_29 EDT - Notes by Gemini.md; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_31 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_12 12_27 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_14 12_30 EDT - Notes by Gemini.md

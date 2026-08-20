@@ -2,7 +2,7 @@
 
 **Summary**: Practical engineering implementation of sidescan sonar (SSS) data augmentation strategies, including cut-paste, Poisson blending, diffusion models, LLM validation loops, and handling of rare classes.
 
-**Last updated**: 2026-08-10
+**Last updated**: 2026-08-14
 
 ---
 
@@ -271,12 +271,43 @@ Key procedural generation developments from the August 10 sync (source: Iris Syn
   - *Search Space*: Automatically combines primitives (shapes, blending masks, textures) and searches the hyperparameter space without requiring differentiable rendering.
 - **24-Hour Viability Target**: The team set a 24-hour deadline to confirm synthetic sample generation viability, with Pratyaksh running 1–2 model iterations by Wednesday.
 
+## Discovery of Silent Augmentation Pipeline Bug in `dual_transform` (August 12)
+
+Pratyaksh identified a critical silent bug in `augmentation.py` that resolved historical experimental discrepancies (source: Iris Sync - 2026_08_12):
+- **Constructor Override Bug**: Custom augmentations subclassing `dual_transform` invoked `super().__init__(always_apply, p)`. In current versions of the library where the base class constructor accepts `p` as the first argument alongside `**kwargs`, passing `always_apply` (a boolean) mistakenly positioned the boolean as the probability `p`.
+- **Training Pipeline Bypassing**: When tested standalone with `always_apply=True`, `p` evaluated to 1.0 (100% execution). However, in training pipelines where `p` was set to standard probabilities (e.g. 0.5, 0.7, 0.9), `always_apply` evaluated as False (or was misassigned), causing custom transforms—including **Poisson copy-paste**—to be silently skipped throughout training runs.
+- **Resolution of Historical Anomalies**: This bug explains earlier confusing findings where perspective transforms appeared to outperform Poisson copy-paste; Poisson copy-paste had never been executed during those comparative runs.
+
+## 3D Synthetic Floating Object Artifacts & Parameter Files (August 12)
+
+Ratul reported on procedural target rendering issues and parameter configuration updates (source: Iris Sync - 2026_08_12):
+- **3D Floating Appearance**: 3D synthetic targets appeared disconnected or "floating" above the seabed due to a perceived 2-pixel gap between the object boundary and its shadow. Setting the pixel offset to zero did not eliminate the visual artifact. Further investigation is focused on alpha blending transitions and applying Fourier series to object outlines.
+- **Fit/Pit and Bulge Parameter Ranges**: Ratul updated the parameter ranges configuration file to supply valid bounds for both "fit/pit" (depressions) and "bulge" (elevated targets) structures to support morphology generation.
+
+## Water-Line and Padding Black Space Masking (August 12)
+
+Pratyaksh refined image-space transform execution on sonar tiles (source: Iris Sync - 2026_08_12):
+- **Margin Masking**: Standard transforms (such as image color inversion) previously converted black padding and water-line empty space into solid white, corrupting the image structure.
+- **Selective Processing**: Updated augmentation pipelines now explicitly mask out water lines and black padding so color transforms only modify valid sonar data pixels. Masking is planned for extension to noise transforms (e.g., Gaussian blur).
+
+## Real vs. Synthetic Image Game Concept (August 12)
+
+Hemanth proposed developing a lightweight interactive application for Bedrock stakeholders (e.g., Bridget) (source: Iris Sync - 2026_08_12):
+- **Interactive Turing Test**: Users are shown pairs of real and procedurally generated synthetic sonar images and asked to classify which is real.
+## Data-Driven Mask Modulation & Axis Deformation (August 14)
+
+Ratul refined synthetic object generation by developing data-driven mask modulations based on real target pixel distributions (source: Iris Sync - 2026_08_14):
+- **Pixel Standard Deviation Thresholding**: Created separate masks for acoustic highlights (bright pixels) and acoustic shadows (dark pixels) by adjusting standard deviation thresholds (increasing SD from 0.5 to 1.5 pixels).
+- **Axis Elongation and Bulging**: Rather than relying on static geometric primitives (circles, teardrops), the system modulates object morphology by independently elongating or bulging bright and dark mask components along specific axes to simulate varying sonar illumination angles.
+- **Repository Branch Commit**: Ratul committed the shape deformation code to a dedicated branch on the Bedrock GitHub repository, including entry point documentation.
+
 ## Related pages
 
 - [[automated-target-recognition]]
 - [[model-performance-and-metrics]]
 - [[model-training-and-iterations]]
 - [[data-sets-and-curation]]
+- [[data-quality-and-gaps]]
 - [[magnetometer-fusion]]
 - [[synthetic-data-requirements]]
 - [[iris-sync-2026-07-29]]
@@ -285,7 +316,9 @@ Key procedural generation developments from the August 10 sync (source: Iris Syn
 - [[iris-sync-2026-08-05]]
 - [[iris-sync-2026-08-07]]
 - [[iris-sync-2026-08-10]]
+- [[iris-sync-2026-08-12]]
+- [[iris-sync-2026-08-14]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_10; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_12 through 2026_08_14; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_12 12_27 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_14 12_30 EDT - Notes by Gemini.md

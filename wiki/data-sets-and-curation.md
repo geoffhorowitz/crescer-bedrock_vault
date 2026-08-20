@@ -2,7 +2,7 @@
 
 **Summary**: Catalog of datasets used in the Bedrock ATR project, their characteristics, annotation status, and curation decisions.
 
-**Last updated**: 2026-08-10
+**Last updated**: 2026-08-14
 
 ---
 
@@ -146,12 +146,37 @@ When selecting background datasets for compositing synthetic targets (source: Ir
 - **Unlabeled Contact Mining**: Visual audit of false positives from the high-recall V4 model revealed that many flagged detections are valid UXO contacts that were omitted by annotators or missed in `AOI small black` (labeling error rate estimated at ~1–5%).
 - **Final Cleaning Pass**: Approved one final, rapid re-labeling pass to add missing annotations before final training. Sachin confirmed manual mask capture across all files for confirmed UXOs, noting that remaining missing labels reside primarily in `AOI small black` (source: Iris Sync - 2026_08_10).
 
+### Ground Truth Remediation Pass (~80 Detections Added) (August 12)
+
+Sachin completed the ground truth remediation pass, adding approximately 80 UXO-resembling targets mined from high-recall model predictions into the `AOI small black` ground truth training set (source: Iris Sync - 2026_08_12).
+
+### K-Fold Crop Duplication & Leakage Investigation (August 12)
+
+Investigation into cross-validation metric anomalies identified data leakage at the image crop level during K-fold partitioning (source: Iris Sync - 2026_08_12):
+- **Duplication Mechanism**: Specific image crops were duplicated across folds such that a file possessed ground truth masks in one fold but lacked them in another, resulting in training and validation set contamination.
+- **Estimated Extent**: Initial agent diagnostics indicated ~14% file repetition across folds (subject to manual verification). A 24-hour fix of the crop generation pipeline was initiated.
+
+### Treasure Island Inference Status (August 12)
+
+- **Base V4 Inference Complete**: Initial model inference was executed on the new Treasure Island evaluation dataset using the base V4 model and documented in running notes/Slack.
+- **Milestone 2 Final Inference**: Full inference on Treasure Island using the best-performing V4 AUG + Copy-and-Paste model configuration is scheduled following K-fold pipeline correction (source: Iris Sync - 2026_08_12).
+
+### Treasure Island Ground Truth Structure & Rocky Domain Shift (August 14)
+
+Detailed analysis of the Treasure Island dataset characteristics from the August 14 sync (source: Iris Sync - 2026_08_14):
+- **Ground Truth Tiering**: Bedrock provided annotations categorized into two channels:
+  - *Verified Contacts*: 347 marked sightings across multiple overlapping sonar passes, corresponding to 61 unique physical contacts.
+  - *Unverified Contacts*: Flagged contact locations that lack multi-pass or magnetic confirmation.
+- **Rocky Terrain Domain Shift**: Treasure Island contains high-resolution rocky seabed topography underrepresented in previous training datasets (VW, ANTX). The acoustic shadows, convex curves, and highlight bumps of natural rock formations closely resemble UXO morphology, causing false positive predictions when evaluated with standard models.
+- **Integration Plan**: Future model iterations will incorporate rocky seabed background tiles from Treasure Island into the training distribution to improve background discrimination, combined with magnetometer data fusion to differentiate rocky terrain from ferromagnetic ordnance.
+
 ## Related pages
 
 - [[model-training-and-iterations]]
 - [[synthetic-data-requirements]]
 - [[sss-augmentation-methods]]
 - [[data-quality-and-gaps]]
+- [[model-performance-and-metrics]]
 - [[bedrock-meeting-transcripts-summary]]
 - [[iris-sync-2026-07-29]]
 - [[iris-sync-2026-07-31]]
@@ -159,7 +184,9 @@ When selecting background datasets for compositing synthetic targets (source: Ir
 - [[iris-sync-2026-08-05]]
 - [[iris-sync-2026-08-07]]
 - [[iris-sync-2026-08-10]]
+- [[iris-sync-2026-08-12]]
+- [[iris-sync-2026-08-14]]
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_10; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_14; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28 11_59 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_07_29 12_26 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_03 12_28 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_05 12_24 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_07 12_16 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_10 12_27 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_12 12_27 EDT - Notes by Gemini.md; raw/meeting_transcripts/Iris Sync - 2026_08_14 12_30 EDT - Notes by Gemini.md

@@ -2,10 +2,16 @@
 
 **Summary**: Lessons learned, pitfalls, and insights from execution on the Bedrock ATR project.
 
-**Last updated**: 2026-08-10
+**Last updated**: 2026-08-14
 
 ---
 
+- **2026-08-14** - **Dataloader Repeat Factor Bottleneck on Pre-Cropped Tiles**: Setting a high `repeat_factor` (e.g. 50) was designed for sampling random crops from large whole-image files. When applied to small pre-sliced K-fold tiles, it creates redundant sampling loops, extending per-fold training from 3–4 hours to 17+ hours without accuracy gain (source: Iris Sync - 2026_08_14).
+- **2026-08-14** - **Multiprocessing Core Contention in CV Pipelines**: Setting high worker counts (e.g. 8 workers) in PyTorch dataloaders where workers invoke multi-threaded OpenCV/NumPy routines causes thread explosion, severe CPU core contention, and swap memory thrashing. Capping workers to 4 and configuring OpenCV thread managers eliminates CPU bottlenecks (source: Iris Sync - 2026_08_14).
+- **2026-08-14** - **Natural Feature Overlap in Rocky Seabed Domains**: Seafloor environments with rocky outcroppings share physical morphological features with UXO targets (acoustic shadows, sharp highlight bumps, curved boundaries). Models trained on flat sandy seafloors produce false positives on rocky terrain unless trained on rocky background tiles and aided by magnetometer data (source: Iris Sync - 2026_08_14).
+- **2026-08-12** - **Silent Subclass Parameter Overrides in Augmentation Pipelines**: Passing positional `always_apply` parameters into base class constructors (`dual_transform`) that expect `p` (probability) created a silent failure mode: unit tests with `always_apply=True` evaluated as `p=1.0` (active), while training configurations with `p < 1.0` caused the transforms (including Poisson copy-paste) to be completely ignored during training runs without throwing runtime errors (source: Iris Sync - 2026_08_12).
+- **2026-08-12** - **Cross-Validation Leakage from Un-Annotated Duplicate Crops**: When partitioning datasets for K-fold spatial cross-validation, duplicate image crops without consistent mask annotations across folds contaminate validation metrics. An un-annotated duplicate crop in the validation set causes correct model predictions to be scored as false positives, distorting cross-validation benchmarks (source: Iris Sync - 2026_08_12).
+- **2026-08-12** - **Critical Thinking Requirement for AI-Generated Code & Anomalies**: Relying on AI coding agents without independent verification creates risks of subtle logic and API mismatch bugs. Teams must apply rigorous critical thinking when experimental outcomes contradict technical intuition (such as copy-paste degrading performance) and utilize secondary independent agents (Claude, Codex, Antigravity) for code reviews (source: Iris Sync - 2026_08_12).
 - **2026-08-10** - **High-Recall Model as Ground Truth Mining Tool**: Flagged false positives from a high-recall detector frequently represent genuine targets omitted by human annotators (ground truth error rate ~1–5%). Leveraging high-recall model predictions to guide targeted re-labeling cleans ground truth efficiently, directly raising measured precision without altering model architectures (source: Iris Sync - 2026_08_10).
 - **2026-08-10** - **Derivative-Free Evolutionary Optimization for Procedural Sonar Synthesis**: Manual parameter tuning for procedural object shapes and blending masks is slow and subjective. Derivative-free evolutionary strategies (CMA-ES, CEM) combined with structural and color loss functions effectively automate parameter searches across non-differentiable procedural pipelines (source: Iris Sync - 2026_08_10).
 - **2026-08-07** - **Diffusion Blob Limitations for Target Synthesis**: Diffusion models fail to capture discrete structural morphology for small sonar targets, outputting unstructured "blobs." Programmatic VLM/LLM procedural code generation using basic geometric primitives (circles, ovals, teardrops, cylinders) with vertex jittering produces superior structural realism for synthetic UXO objects (source: Iris Sync - 2026_08_07).
@@ -44,4 +50,4 @@
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_24 through 2026_08_10; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_24 through 2026_08_14; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17

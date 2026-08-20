@@ -2,10 +2,20 @@
 
 **Summary**: Significant decisions made by the team or client, with rationale and date.
 
-**Last updated**: 2026-08-10
+**Last updated**: 2026-08-14
 
 ---
 
+- **2026-08-14** - **Dataloader Repeat Factor Reduction to 1 & 200 Epoch Cap**: Reduced dataloader repeat factor from 50 to 1 and established a 200 total training epoch cap (with early evaluation at 10–30 epochs) to prevent redundant sampling and shorten fold training runtimes from 17+ hours to 3–4 hours (source: Iris Sync - 2026_08_14).
+- **2026-08-14** - **Multi-Compute Allocation & Blackwell MIG Parallelization**: Shifted V1 baseline training to Ninja, assigned heavy V4 configurations to Volley, and utilized Blackwell Multi-Instance GPU (MIG) slices to train all 5 folds in parallel per model (source: Iris Sync - 2026_08_14).
+- **2026-08-14** - **3-Channel Pre-Trained Architecture Adoption**: Transitioned sonar model input from single-channel grayscale to 3-channel replicated grayscale initialized with ImageNet pre-trained weights and differential encoder learning rates (0.1x decoder LR) (source: Iris Sync - 2026_08_14).
+- **2026-08-14** - **Customer-Facing 4-Bucket Confusion Matrix Mandate**: Reaffirmed that 4-bucket confusion matrices (raw counts and percentages: UXO-like, Non-UXO-like, Background) will serve as the primary customer performance deliverable rather than single aggregate F1 numbers (source: Iris Sync - 2026_08_14).
+- **2026-08-14** - **Test-Time Scaling as Optional Feature**: Decided to evaluate test-time augmentations and sequential multi-model inference as an optional "test-time scaling" demonstration feature for Bedrock rather than committing to it as the core shipping architecture (source: Iris Sync - 2026_08_14).
+- **2026-08-12** - **Prioritization of K-Fold Data Leakage Resolution**: Prioritized debugging and resolving the crop-level K-fold data leakage within 24 hours, deferring K-fold cross-validation retraining and Treasure Island inference until the fix is validated (source: Iris Sync - 2026_08_12).
+- **2026-08-12** - **Procedural Generation Evaluation on 80/20 Split**: Approved evaluating procedural synthetic generation models on the verified single 80/20 train/test split in parallel while the K-fold pipeline is repaired (source: Iris Sync - 2026_08_12).
+- **2026-08-12** - **Standardized Image and Mask Split Tile Sizes**: Aligned on standardizing data processing and patch generation to 128, 256, and 512 pixel splits for XTF preparation and model training (source: Iris Sync - 2026_08_12).
+- **2026-08-12** - **Metaclass Evaluation Grouping (UXO + AOI Small Black)**: Established that evaluating UXO and AOI small black as a unified "UXO-like" metaclass provides authoritative precision/recall metrics, reflecting visual similarity in side-scan sonar (source: Iris Sync - 2026_08_12).
+- **2026-08-12** - **Jetson & Streamlit Distributed Deployment Architecture**: Finalized architecture for Milestone 2 deployment: the model inference pipeline runs onboard the embedded Jetson device, while the Streamlit application UI is hosted locally or on the Wally server (source: Iris Sync - 2026_08_12).
 - **2026-08-10** - **V4 AUG + Cut-and-Paste Leading Candidate Designation**: Designated V4 with image augmentations and cut-and-paste foreground targets as the leading candidate model configuration for Milestone 2, with final cross-validation testing underway to validate performance prior to final selection (source: Iris Sync - 2026_08_10).
 - **2026-08-10** - **Final Ground Truth Re-Labeling & Cleaning Pass**: Approved one final, rapid re-labeling and cleaning pass to correct ~1–5% missing UXO / AOI small black annotations identified during false positive error analysis (source: Iris Sync - 2026_08_10).
 - **2026-08-10** - **Evolutionary Optimization for Synthetic Parameters**: Adopted derivative-free evolutionary strategies (CMA-ES, CEM) combined with structural and color-based loss functions to automate procedural shape and blending parameter tuning, moving away from manual trial-and-error (source: Iris Sync - 2026_08_10).
@@ -60,4 +70,4 @@
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_10; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_07_03 through 2026_08_14; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28

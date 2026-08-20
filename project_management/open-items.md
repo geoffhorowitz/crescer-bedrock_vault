@@ -2,15 +2,29 @@
 
 **Summary**: Active and resolved action items, blockers, and follow-ups for the Bedrock ATR project.
 
-**Last updated**: 2026-08-10
+**Last updated**: 2026-08-14
 
 ---
 
 ## Active items
 
+- **2026-08-14** - **K-Fold Training Pipeline Execution (Repeat Factor 1)**: Sachin and Pratyaksh to execute parallelized 5-fold cross-validation runs on Blackwell and Volley with repeat factor set to 1 and epochs to 200, targeting completion before Monday sync (source: Iris Sync - 2026_08_14). [Status: In-Progress]
+- **2026-08-14** - **Draft 4-Bucket Confusion Matrix Generation**: Pratyaksh and Sachin to generate and share 4-bucket confusion matrices with prediction images for Geoff and Hemanth by Sunday (source: Iris Sync - 2026_08_14). [Status: Open]
+- **2026-08-14** - **Data-Driven Mask Modulation Code Branch**: Ratul to push data-driven shape modification code and parameter documentation to a new branch in the Bedrock GitHub repository (source: Iris Sync - 2026_08_14). [Status: Open]
+- **2026-08-14** - **Side-by-Side Real vs Synthetic Comparison App**: Ratul and Geoff to develop a lightweight app comparing real vs. procedurally generated synthetic targets for client review (source: Iris Sync - 2026_08_14). [Status: Open]
+- **2026-08-14** - **Jetson Hardware Container Testing**: Geoff and Sachin to test containerized model execution on the Jetson embedded hardware over the weekend (source: Iris Sync - 2026_08_14). [Status: Open]
+- **2026-08-14** - **Magnetometer Software Verification Research**: Geoff to research software and filtering tools used for Bedrock's magnetic data verification (source: Iris Sync - 2026_08_14). [Status: Open]
+- **2026-08-12** - **Fix K-Fold Crop Data Leakage**: Sachin to resolve crop-level file duplication and missing masks in the K-fold pipeline within 24 hours (source: Iris Sync - 2026_08_12). [Status: Resolved on 2026-08-14: Data leakage resolved and verified via pixel count and crop boundary checks.]
+- **2026-08-12** - **K-Fold Debugging Support**: Pratyaksh and Ratul to assist Sachin in debugging and validating K-fold splitting logic (source: Iris Sync - 2026_08_12). [Status: Resolved on 2026-08-14: K-fold data verified.]
+- **2026-08-12** - **V4 AUG + Copy-and-Paste HTML Report**: Sachin to document verified 80/20 benchmark results with confusion matrices and prediction imagery in an HTML report within 24 hours (source: Iris Sync - 2026_08_12). [Status: In-Progress]
+- **2026-08-12** - **Treasure Island Full Evaluation**: Sachin to run model inference on Treasure Island with the top model once K-fold fix is complete (source: Iris Sync - 2026_08_12). [Status: In-Progress - base V4 inference executed; top model eval scheduled following K-fold runs.]
+- **2026-08-12** - **Jetson Deployment Configuration Review**: Geoff and Sachin to review and test Jetson deployment pipeline over the weekend (source: Iris Sync - 2026_08_12). [Status: Open]
+- **2026-08-12** - **3D Synthetic Object Shadow Gap & Fit/Bulge Code**: Ratul to investigate 3D floating shadow gap / alpha blending and share parameter ranges and fit code (source: Iris Sync - 2026_08_12). [Status: Open]
+- **2026-08-12** - **Noise Transform Masking & Procedural Training on 80/20**: Pratyaksh to implement water-line/padding masking for noise transforms and train a model with procedural generation on the 80/20 split (source: Iris Sync - 2026_08_12). [Status: Open]
+- **2026-08-12** - **Real vs. Synthetic Image Game**: Develop a lightweight application challenging users to distinguish real vs. synthetic sonar images for client engagement (source: Iris Sync - 2026_08_12). [Status: Open]
 - **2026-08-10** - **Share 4 Performance Tables on Slack**: Sachin to share four performance tables (2 unprocessed raw prediction tables across folds/models vs. 2 post-processed tables with size/confidence filters) on the project Slack (source: Iris Sync - 2026_08_10). [Status: Open]
 - **2026-08-10** - **Validate V4 AUG + Cut-and-Paste via Cross-Validation**: Sachin to train and validate the V4 AUG + Cut-and-Paste candidate across folds to verify Milestone 2 performance (source: Iris Sync - 2026_08_10). [Status: In-Progress]
-- **2026-08-10** - **Final Ground Truth Re-Labeling**: Sachin and Pratyaksh to execute a final, rapid re-labeling and cleaning pass for un-annotated UXO / AOI small black contacts (source: Iris Sync - 2026_08_10). [Status: Open]
+- **2026-08-10** - **Final Ground Truth Re-Labeling**: Sachin and Pratyaksh to execute a final, rapid re-labeling and cleaning pass for un-annotated UXO / AOI small black contacts (source: Iris Sync - 2026_08_10). [Status: Resolved on 2026-08-12: Sachin integrated ~80 mined UX annotations into AOI small black training ground truth.]
 - **2026-08-10** - **Jetson Hardware Testing & M2 Delivery**: Geoff to spearhead Jetson deployment testing with Sachin's support to prepare Milestone 2 models for Bedrock delivery this week (source: Iris Sync - 2026_08_10). [Status: In-Progress]
 - **2026-08-10** - **Evolutionary Optimization Loop Implementation**: Pratyaksh to set up derivative-free optimization loop (CMA-ES/CEM) with structural/color losses for synthetic data parameters (source: Iris Sync - 2026_08_10). [Status: Open]
 - **2026-08-10** - **Shape Parameter Delivery**: Ratul to finalize and share tuned shape parameters within 24 hours (source: Iris Sync - 2026_08_10). [Status: Open]
@@ -78,4 +92,4 @@
 
 ---
 
-**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_24 through 2026_08_10; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28
+**Sources**: raw/meeting_transcripts/Iris Sync - 2026_06_24 through 2026_08_14; raw/meeting_transcripts/Aux Discussion Mag Data - 2026_07_17; raw/meeting_transcripts/Bedrock connect - 2026_07_17; raw/meeting_transcripts/Bedrock Discussion Continued (understanding eval agent) - 2026_07_28
